@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="10px" height="12px" viewBox="0 0 10 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Path</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Home" transform="translate(-139.000000, -426.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="Group" transform="translate(120.000000, 412.000000)">
+                <path d="M28.733,19.565 L19.753,14.564 C19.42,14.379 19.01,14.62 19.01,15.001 L19.01,25.003 C19.01,25.384 19.42,25.625 19.753,25.44 L28.733,20.439 C29.076,20.248 29.076,19.756 28.733,19.565 Z" id="Path"></path>
+            </g>
+        </g>
+    </g>
+</svg>
