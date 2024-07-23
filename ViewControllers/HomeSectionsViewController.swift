@@ -240,7 +240,7 @@ class HomeSectionsViewController: UIViewController{
             collectionVW.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             menuCollectionView.leadingAnchor.constraint(equalTo: peacockImage.trailingAnchor),
-            menuCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            menuCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -5),
             menuCollectionView.trailingAnchor.constraint(equalTo: chromecastImage.leadingAnchor),
             menuCollectionView.heightAnchor.constraint(equalToConstant: 50),
             
@@ -256,13 +256,13 @@ class HomeSectionsViewController: UIViewController{
             
             peacockImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             peacockImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            peacockImage.widthAnchor.constraint(equalToConstant: 50),
-            peacockImage.heightAnchor.constraint(equalToConstant: 50),
+            peacockImage.widthAnchor.constraint(equalToConstant: 40),
+            peacockImage.heightAnchor.constraint(equalToConstant: 40),
             
             chromecastImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             chromecastImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            chromecastImage.widthAnchor.constraint(equalToConstant: 50),
-            chromecastImage.heightAnchor.constraint(equalToConstant: 50),
+            chromecastImage.widthAnchor.constraint(equalToConstant: 40),
+            chromecastImage.heightAnchor.constraint(equalToConstant: 40),
             
             tabBarMenu.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             tabBarMenu.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
