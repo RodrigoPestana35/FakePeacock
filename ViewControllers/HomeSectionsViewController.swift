@@ -330,6 +330,7 @@ class HomeSectionsViewController: UIViewController{
     var controlo = 0
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        scrollViewDidScroll(menuCollectionView)
         
         if controlo == 0{
             let startItem: Int = totalCels/2
@@ -356,12 +357,12 @@ class HomeSectionsViewController: UIViewController{
             else { return }
             if castCell.label.text == selectedCellNameMenu {
                 castCell.showLine(false)
-                castCell.label.font = UIFont.boldSystemFont(ofSize: 14)
+//                castCell.label.font = UIFont.boldSystemFont(ofSize: 14)
             }
         }
         
         //aumenta o tamanho da fonte e seleciona a nova categoria
-        cell.label.font = UIFont.boldSystemFont(ofSize: 16)
+//        cell.label.font = UIFont.boldSystemFont(ofSize: 16)
         cell.showLine(true)
         
         //com base na categoria selecionada atualiza a variavel dos dados apresentados com os dados filtrados para essa categoria
@@ -471,11 +472,11 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
             cell.isUserInteractionEnabled = true
             if selectedCellNameMenu == buttons[indexPath.item % buttons.count] {
                 cell.configure(title: buttons[indexPath.item % buttons.count], showLine: true)
-                cell.label.font = UIFont.boldSystemFont(ofSize: 16)
+//                cell.label.font = UIFont.boldSystemFont(ofSize: 16)
             }
             else{
                 cell.configure(title: buttons[indexPath.item % buttons.count], showLine: false)
-                cell.label.font = UIFont.boldSystemFont(ofSize: 14)
+//                cell.label.font = UIFont.boldSystemFont(ofSize: 14)
             }
             return cell
         }
@@ -532,10 +533,10 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == menuCollectionView {
             let title = buttons[indexPath.item % buttons.count]
-            let font = UIFont.boldSystemFont(ofSize: 20)
+            let font = UIFont.boldSystemFont(ofSize: 16)
             let width = title.size(withAttributes: [NSAttributedString.Key.font: font]).width + 24
             return CGSize(width: width, height: 30)
-//            return CGSize(width: collectionView.frame.width * 0.35, height: collectionView.frame.height)
+//            return CGSize(width: 100, height: collectionView.frame.height)
         }
         else {
             return CGSize(width: 40, height: 30)
@@ -561,8 +562,7 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
             blurEffectHeaderMenu.alpha = min(maxOffset, contentOffsetY) / maxOffset-0.1
         }
         else if scrollView == menuCollectionView {
-            let centerX = scrollView.bounds.size.width/2 + scrollView.contentOffset.x
-            
+            let centerX = scrollView.bounds.size.width/2 + scrollView.contentOffset.x            
             for cell in menuCollectionView.visibleCells as! [MenuButtonCollectionViewCell] {
                 let cellCenterX = cell.center.x
                 let distanceFromCenter = abs(centerX - cellCenterX)
