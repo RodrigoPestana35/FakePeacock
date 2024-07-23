@@ -532,9 +532,10 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == menuCollectionView {
             let title = buttons[indexPath.item % buttons.count]
-            let font = UIFont.boldSystemFont(ofSize: 14)
+            let font = UIFont.boldSystemFont(ofSize: 20)
             let width = title.size(withAttributes: [NSAttributedString.Key.font: font]).width + 24
             return CGSize(width: width, height: 30)
+//            return CGSize(width: collectionView.frame.width * 0.35, height: collectionView.frame.height)
         }
         else {
             return CGSize(width: 40, height: 30)
@@ -552,11 +553,25 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
     
     //É chamada sempre que ha scroll, calcula a percentagem de blur e opacidade da do header menu com base no scroll
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let contentOffsetY = scrollView.contentOffset.y
-        let maxOffset = view.safeAreaLayoutGuide.layoutFrame.height / 3
-        let percentage = min(0.5, contentOffsetY / maxOffset)+0.10
-        headerMenuLabel.backgroundColor = UIColor(white: 0, alpha: percentage)
-        blurEffectHeaderMenu.alpha = min(maxOffset, contentOffsetY) / maxOffset-0.1
+        if scrollView == collectionVW {
+            let contentOffsetY = scrollView.contentOffset.y
+            let maxOffset = view.safeAreaLayoutGuide.layoutFrame.height / 3
+            let percentage = min(0.5, contentOffsetY / maxOffset)+0.10
+            headerMenuLabel.backgroundColor = UIColor(white: 0, alpha: percentage)
+            blurEffectHeaderMenu.alpha = min(maxOffset, contentOffsetY) / maxOffset-0.1
+        }
+        else if scrollView == menuCollectionView {
+            let centerX = scrollView.bounds.size.width/2 + scrollView.contentOffset.x
+            
+            for cell in menuCollectionView.visibleCells as! [MenuButtonCollectionViewCell] {
+                let cellCenterX = cell.center.x
+                let distanceFromCenter = abs(centerX - cellCenterX)
+                let maxDistance = scrollView.bounds.size.width/2
+                let percentage = min(distanceFromCenter / maxDistance, 1)
+                let fontSize = 20 - (12 * percentage)
+                cell.label.font = UIFont.boldSystemFont(ofSize: fontSize)
+            }
+        }
     }
     
 }
