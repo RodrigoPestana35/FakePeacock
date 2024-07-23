@@ -32,7 +32,6 @@ class HomeSectionsViewController: UIViewController{
     }
     
     private var selectedImageTabBarView: UIImageView?
-    private var selectedCellHeaderMenu: MenuButtonCollectionViewCell?
     private var selectedCategory: Category?
     private var selectedCellNameMenu: String?
     
@@ -357,14 +356,13 @@ class HomeSectionsViewController: UIViewController{
             else { return }
             if castCell.label.text == selectedCellNameMenu {
                 castCell.showLine(false)
-                castCell.
+                castCell.label.font = UIFont.boldSystemFont(ofSize: 14)
             }
         }
         
         //aumenta o tamanho da fonte e seleciona a nova categoria
         cell.label.font = UIFont.boldSystemFont(ofSize: 16)
         cell.showLine(true)
-        selectedCellHeaderMenu = cell
         
         //com base na categoria selecionada atualiza a variavel dos dados apresentados com os dados filtrados para essa categoria
         switch(category) {
