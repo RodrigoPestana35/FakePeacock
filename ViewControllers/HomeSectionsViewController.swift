@@ -558,10 +558,10 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == menuCollectionView {
             let title = buttons[indexPath.item % buttons.count]
-            let font = UIFont.boldSystemFont(ofSize: 16)
+            let font = UIFont.boldSystemFont(ofSize: 15)
             let width = title.size(withAttributes: [NSAttributedString.Key.font: font]).width + 24
             return CGSize(width: width, height: 30)
-            //            return CGSize(width: 100, height: collectionView.frame.height)
+            //        return CGSize(width: 70, height: collectionView.frame.height)
         }
         else {
             return CGSize(width: 40, height: 30)
@@ -584,25 +584,24 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
     //        }
     //    }
     
-//        func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//            if !decelerate {
-//                scrollToCell()
-//            }
-//        }
-    
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView,
-                                   withVelocity velocity: CGPoint,
-                                   targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        print("A UIScrollView está prestes a parar de ser arrastada. Velocidade: \(velocity)")
-                
-        // Define um limiar de velocidade baixo para determinar quando a rolagem é lenta
-            let lowVelocityThreshold: CGFloat = 0.9
-
-            // Verifica se a velocidade de rolagem é baixa o suficiente
-            if abs(velocity.x) < lowVelocityThreshold {
-                scrollToCell()
-            }
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if !decelerate {
+            scrollToCell()
+        }
     }
+    
+    //    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+    //        print("A UIScrollView está prestes a parar de ser arrastada. Velocidade: \(velocity)")
+    //
+    //        // Define um limiar de velocidade baixo para determinar quando a rolagem é lenta
+    //        let lowVelocityThreshold: CGFloat = 1.5
+    //
+    //            // Verifica se a velocidade de rolagem é baixa o suficiente
+    //            if abs(velocity.x) < lowVelocityThreshold {
+    //                print("VELOCIDADE X \(abs(velocity.x))")
+    //                scrollToCell()
+    //            }
+    //    }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         scrollToCell()
@@ -673,7 +672,10 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
                 let distanceFromCenter = abs(centerX - cellCenterX)
                 let maxDistance = scrollView.bounds.size.width/2
                 let percentage = min(distanceFromCenter / maxDistance, 1)
-                let fontSize = 20 - (12 * percentage)
+//                let fontSize = 20 - (12 * percentage)
+                let maxFontSize: CGFloat = 20
+                let minFontSize: CGFloat = 14
+                let fontSize = maxFontSize - ((maxFontSize - minFontSize) * percentage)
                 let alpha = 0.3 + ((1 - 0.3) * (1 - percentage))
                 cell.label.font = UIFont.boldSystemFont(ofSize: fontSize)
                 cell.label.alpha = alpha
@@ -740,18 +742,14 @@ extension HomeSectionsViewController {
                 cell.frame,
                 to: menuCollectionView.superview
             )
-            /// Calculate if at least 50% of the cell is in the boundaries we created
             let viewMidX = view.frame.midX
             let cellMidX = cellRect.midX
             let topBoundary = viewMidX + cellRect.width/2
             let bottomBoundary = viewMidX - cellRect.width/2
             
-            /// A print state representating what the return is calculating
-            print("topboundary: \(topBoundary) > cellMidX: \(cellMidX) > Bottom Boundary: \(bottomBoundary)")
             return topBoundary > cellMidX  && cellMidX > bottomBoundary
         })
         
-        /// Appends visible cell index to `cellIndexPath`
         visibleCells.forEach({
             if let selectedIndexPath = menuCollectionView.indexPath(for: $0) {
                 indexPath = selectedIndexPath
