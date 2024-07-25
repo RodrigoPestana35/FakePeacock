@@ -16,6 +16,7 @@
 		F996962E2C452DA200C8D466 /* ItemGenreListDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F996962D2C452DA100C8D466 /* ItemGenreListDto.swift */; };
 		F99696302C452E0000C8D466 /* ItemSubGenreDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F996962F2C452E0000C8D466 /* ItemSubGenreDto.swift */; };
 		F99696322C45657100C8D466 /* MenuButtonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99696312C45657100C8D466 /* MenuButtonCollectionViewCell.swift */; };
+		F99696382C51546100C8D466 /* TopNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F99696372C51546100C8D466 /* TopNavigationBarView.swift */; };
 		F9A09EDE2C4127D900D74804 /* HeaderSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A09EDD2C4127D900D74804 /* HeaderSupplementaryView.swift */; };
 		F9A09EE02C41693500D74804 /* RailRenderHintDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A09EDF2C41693500D74804 /* RailRenderHintDto.swift */; };
 		F9A09EE22C4184AB00D74804 /* TileHighlightCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A09EE12C4184AB00D74804 /* TileHighlightCollectionViewCell.swift */; };
@@ -39,7 +40,6 @@
 		F9FF96372C3C1FA700FBEED5 /* ItemsImagesDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FF96362C3C1FA700FBEED5 /* ItemsImagesDto.swift */; };
 		F9FF96392C3D724400FBEED5 /* PDPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FF96382C3D724400FBEED5 /* PDPViewController.swift */; };
 		F9FF963B2C3D725F00FBEED5 /* MoviesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FF963A2C3D725F00FBEED5 /* MoviesViewController.swift */; };
-		F9FF963D2C3D882900FBEED5 /* NavigationTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FF963C2C3D882900FBEED5 /* NavigationTabBar.swift */; };
 		F9FF963F2C3D88EA00FBEED5 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FF963E2C3D88EA00FBEED5 /* SearchViewController.swift */; };
 		F9FF96412C3D891B00FBEED5 /* TvViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FF96402C3D891B00FBEED5 /* TvViewController.swift */; };
 		F9FF96432C3D9B6700FBEED5 /* DownloadsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FF96422C3D9B6700FBEED5 /* DownloadsViewController.swift */; };
@@ -59,6 +59,7 @@
 		F996962D2C452DA100C8D466 /* ItemGenreListDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemGenreListDto.swift; sourceTree = "<group>"; };
 		F996962F2C452E0000C8D466 /* ItemSubGenreDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemSubGenreDto.swift; sourceTree = "<group>"; };
 		F99696312C45657100C8D466 /* MenuButtonCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuButtonCollectionViewCell.swift; sourceTree = "<group>"; };
+		F99696372C51546100C8D466 /* TopNavigationBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNavigationBarView.swift; sourceTree = "<group>"; };
 		F9A09EDD2C4127D900D74804 /* HeaderSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSupplementaryView.swift; sourceTree = "<group>"; };
 		F9A09EDF2C41693500D74804 /* RailRenderHintDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailRenderHintDto.swift; sourceTree = "<group>"; };
 		F9A09EE12C4184AB00D74804 /* TileHighlightCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileHighlightCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -82,7 +83,6 @@
 		F9FF96362C3C1FA700FBEED5 /* ItemsImagesDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsImagesDto.swift; sourceTree = "<group>"; };
 		F9FF96382C3D724400FBEED5 /* PDPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDPViewController.swift; sourceTree = "<group>"; };
 		F9FF963A2C3D725F00FBEED5 /* MoviesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesViewController.swift; sourceTree = "<group>"; };
-		F9FF963C2C3D882900FBEED5 /* NavigationTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTabBar.swift; sourceTree = "<group>"; };
 		F9FF963E2C3D88EA00FBEED5 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		F9FF96402C3D891B00FBEED5 /* TvViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TvViewController.swift; sourceTree = "<group>"; };
 		F9FF96422C3D9B6700FBEED5 /* DownloadsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadsViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +104,7 @@
 		F9102CF32C358FDE000A5BE3 = {
 			isa = PBXGroup;
 			children = (
+				F99696362C51410100C8D466 /* Views */,
 				F9FF96272C383F9D00FBEED5 /* Repositories */,
 				F9FF96122C37FBFD00FBEED5 /* UseCases */,
 				F9102D172C36EE6B000A5BE3 /* ViewModels */,
@@ -160,14 +161,9 @@
 				F9FF961D2C383BD500FBEED5 /* HomeSectionsViewController.swift */,
 				F9FF96382C3D724400FBEED5 /* PDPViewController.swift */,
 				F9FF963A2C3D725F00FBEED5 /* MoviesViewController.swift */,
-				F9FF963C2C3D882900FBEED5 /* NavigationTabBar.swift */,
 				F9FF963E2C3D88EA00FBEED5 /* SearchViewController.swift */,
 				F9FF96402C3D891B00FBEED5 /* TvViewController.swift */,
 				F9FF96422C3D9B6700FBEED5 /* DownloadsViewController.swift */,
-				F9FF96482C3FD84100FBEED5 /* TileCollectionViewCell.swift */,
-				F9A09EDD2C4127D900D74804 /* HeaderSupplementaryView.swift */,
-				F9A09EE12C4184AB00D74804 /* TileHighlightCollectionViewCell.swift */,
-				F99696312C45657100C8D466 /* MenuButtonCollectionViewCell.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -180,6 +176,18 @@
 				F9FF962C2C3847AD00FBEED5 /* HomeSectionsViewModelImp.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F99696362C51410100C8D466 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F9A09EDD2C4127D900D74804 /* HeaderSupplementaryView.swift */,
+				F9FF96482C3FD84100FBEED5 /* TileCollectionViewCell.swift */,
+				F9A09EE12C4184AB00D74804 /* TileHighlightCollectionViewCell.swift */,
+				F99696312C45657100C8D466 /* MenuButtonCollectionViewCell.swift */,
+				F99696372C51546100C8D466 /* TopNavigationBarView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		F9FF96122C37FBFD00FBEED5 /* UseCases */ = {
@@ -289,6 +297,7 @@
 				F9FF96182C37FCE900FBEED5 /* PokemonAbilitiesDto.swift in Sources */,
 				F9102D002C358FDE000A5BE3 /* AppDelegate.swift in Sources */,
 				F9FF96352C3C1A3000FBEED5 /* HomeSectionsItemsDto.swift in Sources */,
+				F99696382C51546100C8D466 /* TopNavigationBarView.swift in Sources */,
 				F9A09EDE2C4127D900D74804 /* HeaderSupplementaryView.swift in Sources */,
 				F9FF96372C3C1FA700FBEED5 /* ItemsImagesDto.swift in Sources */,
 				F9102D022C358FDE000A5BE3 /* SceneDelegate.swift in Sources */,
@@ -297,7 +306,6 @@
 				F9FF96412C3D891B00FBEED5 /* TvViewController.swift in Sources */,
 				F9FF96222C383DB700FBEED5 /* SearchHomeSectionsUseCase.swift in Sources */,
 				F9A09EE22C4184AB00D74804 /* TileHighlightCollectionViewCell.swift in Sources */,
-				F9FF963D2C3D882900FBEED5 /* NavigationTabBar.swift in Sources */,
 				F9FF96292C383FD100FBEED5 /* HomeSectionsRepo.swift in Sources */,
 				F9FF963F2C3D88EA00FBEED5 /* SearchViewController.swift in Sources */,
 				F996962E2C452DA200C8D466 /* ItemGenreListDto.swift in Sources */,
@@ -462,6 +470,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 66FDAX6KVN;
@@ -479,6 +488,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = rodrigoPestana.FakePeacock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -490,6 +500,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 66FDAX6KVN;
@@ -507,6 +518,7 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = rodrigoPestana.FakePeacock;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
