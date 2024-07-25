@@ -37,6 +37,11 @@ class HomeSectionsViewController: UIViewController{
     private var selectedCellNameMenu: String?
     private var selectedCellIndexPath: IndexPath?
     
+    private var lastContentOffset: CGPoint = .zero
+    private var lastUpdateTime: TimeInterval = 0
+    private var scrollSpeed: CGFloat = 0 // Armazena a velocidade atual
+    var topHeaderIsCurrentScrolling = false
+    
     //Rails Collection View
     private lazy var collectionVW: UICollectionView = {
         let collectionV = UICollectionView(frame: .zero, collectionViewLayout: makeLayout())
@@ -326,6 +331,8 @@ class HomeSectionsViewController: UIViewController{
             self.selectDefaultHeaderMenuItem()
         }
         
+        lastUpdateTime = CACurrentMediaTime()
+        
     }
     
     var controlo = 0
@@ -349,23 +356,7 @@ class HomeSectionsViewController: UIViewController{
     }
     
     //função que coloca e tira a linha por baixo da categoria e atualiza os dados apresentados
-    private func selectLabelHeaderMenu(cell: MenuButtonCollectionViewCell, category: String) {
-        //tira a linha da categoria anteriormente selecionada e diminui o tamanho da fonte
-        //        menuCollectionView.visibleCells.forEach { currentCell in
-        //            guard
-        //                let selectedCellNameMenu,
-        //                let castCell = currentCell as? MenuButtonCollectionViewCell
-        //            else { return }
-        //            if castCell.label.text == selectedCellNameMenu {
-        ////                castCell.showLine(false)
-        //                //                castCell.label.font = UIFont.boldSystemFont(ofSize: 14)
-        //            }
-        //        }
-        
-        //aumenta o tamanho da fonte e seleciona a nova categoria
-        //        cell.label.font = UIFont.boldSystemFont(ofSize: 16)
-        //        cell.showLine(true)
-        
+    private func selectCategoryHeaderMenu(cell: MenuButtonCollectionViewCell, category: String) {
         //com base na categoria selecionada atualiza a variavel dos dados apresentados com os dados filtrados para essa categoria
         switch(category) {
         case "Home":
@@ -402,7 +393,7 @@ class HomeSectionsViewController: UIViewController{
         let indexPath = IndexPath(item: totalCels/2, section: 0)
         if let cell = menuCollectionView.cellForItem(at: indexPath) as? MenuButtonCollectionViewCell {
             let category = buttons[0]
-            selectLabelHeaderMenu(cell: cell, category: category)
+            selectCategoryHeaderMenu(cell: cell, category: category)
             selectedCellNameMenu = cell.label.text
             selectedCellIndexPath = indexPath
         }
@@ -481,7 +472,7 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
         if collectionView == menuCollectionView {
             let category = buttons[indexPath.item % buttons.count]
             if let cell = collectionView.cellForItem(at: indexPath) as? MenuButtonCollectionViewCell {
-                selectLabelHeaderMenu(cell: cell, category: category)
+                selectCategoryHeaderMenu(cell: cell, category: category)
                 selectedCellNameMenu = cell.label.text
                 select(row: indexPath.item)
             }
@@ -568,26 +559,11 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
         }
     }
     
-    //    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    //        if scrollView == menuCollectionView{
-    //            guard let collectionView = scrollView as? UICollectionView else { return }
-    //            let layout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-    //            let cellWidthIncludingSpacing = layout.itemSize.width + layout.minimumLineSpacing
-    //
-    //            // Calcula o índice da célula central mais próxima
-    //            let centerX = collectionView.bounds.size.width
-    //            let targetX = targetContentOffset.pointee.x + centerX
-    //            let roundedIndex = round(targetX / cellWidthIncludingSpacing)
-    //
-    //            // Centraliza a célula
-    //            targetContentOffset.pointee = CGPoint(x: roundedIndex * cellWidthIncludingSpacing - centerX, y: targetContentOffset.pointee.y)
-    //        }
-    //    }
-    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if !decelerate {
             scrollToCell()
         }
+        topHeaderIsCurrentScrolling = true
     }
     
     //    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
@@ -603,38 +579,8 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
     //            }
     //    }
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        scrollToCell()
-    }
-    
-    //    func scrollToCell() {
-    //        var indexPath = IndexPath()
-    //            var visibleCells = menuCollectionView.visibleCells
-    //
-    //            /// Gets visible cells
-    //            visibleCells = visibleCells.filter({ cell -> Bool in
-    //
-    //                let cellRect = menuCollectionView.convert(
-    //                    cell.frame,
-    //                    to: menuCollectionView.superview
-    //                )
-    //                /// Calculate if at least 50% of the cell is in the boundaries we created
-    //                let viewMidX = view.frame.midX
-    //                let cellMidX = cellRect.midX
-    //                let topBoundary = viewMidX + cellRect.width/2
-    //                let bottomBoundary = viewMidX - cellRect.width/2
-    //
-    //                /// A print state representating what the return is calculating
-    //                print("topboundary: \(topBoundary) > cellMidX: \(cellMidX) > Bottom Boundary: \(bottomBoundary)")
-    //                return topBoundary > cellMidX  && cellMidX > bottomBoundary
-    //            })
-    //
-    //            /// Appends visible cell index to `cellIndexPath`
-    //            visibleCells.forEach({
-    //                if let selectedIndexPath = menuCollectionView.indexPath(for: $0) {
-    //                    indexPath = selectedIndexPath
-    //                }
-    //            })
+    //    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    //        scrollToCell()
     //    }
     
     //    func scrollViewWillEndDragging(
@@ -657,6 +603,7 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
     }
     
     //É chamada sempre que ha scroll, calcula a percentagem de blur e opacidade da do header menu com base no scroll
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == collectionVW {
             let contentOffsetY = scrollView.contentOffset.y
@@ -672,7 +619,7 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
                 let distanceFromCenter = abs(centerX - cellCenterX)
                 let maxDistance = scrollView.bounds.size.width/2
                 let percentage = min(distanceFromCenter / maxDistance, 1)
-//                let fontSize = 20 - (12 * percentage)
+                //                let fontSize = 20 - (12 * percentage)
                 let maxFontSize: CGFloat = 20
                 let minFontSize: CGFloat = 14
                 let fontSize = maxFontSize - ((maxFontSize - minFontSize) * percentage)
@@ -680,18 +627,40 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
                 cell.label.font = UIFont.boldSystemFont(ofSize: fontSize)
                 cell.label.alpha = alpha
             }
+            let currentTime = CACurrentMediaTime()
+            let deltaTime = currentTime - lastUpdateTime
+            let deltaOffset = scrollView.contentOffset.x - lastContentOffset.x
+            
+            // Calcula a velocidade (pixels por segundo)
+            scrollSpeed = abs(deltaOffset / CGFloat(deltaTime))
+            
+            // Atualiza o tempo e deslocamento anteriores
+            lastUpdateTime = currentTime
+            lastContentOffset = scrollView.contentOffset
+            
+            // Exemplo de uso da velocidade
+            
+            if topHeaderIsCurrentScrolling == true {
+                if(scrollSpeed <= 100 && scrollSpeed != 0) {
+                    scrollToCell()
+                    topHeaderIsCurrentScrolling = false
+                }
+            }
+            
+            
         }
     }
     
 }
-extension String {
-    
-    func widthOfString(usingFont font: UIFont) -> CGFloat {
-        let fontAttributes = [NSAttributedString.Key.font: font]
-        let size = self.size(withAttributes: fontAttributes)
-        return size.width
-    }
-}
+
+//extension String {
+//
+//    func widthOfString(usingFont font: UIFont) -> CGFloat {
+//        let fontAttributes = [NSAttributedString.Key.font: font]
+//        let size = self.size(withAttributes: fontAttributes)
+//        return size.width
+//    }
+//}
 
 extension HomeSectionsViewController {
     public func select(
@@ -716,7 +685,7 @@ extension HomeSectionsViewController {
             //            showLine: true
         )
         selectedCellNameMenu = buttons[indexPath.row % buttons.count]
-        selectLabelHeaderMenu(cell: cell!, category: buttons[indexPath.row % buttons.count])
+        selectCategoryHeaderMenu(cell: cell!, category: buttons[indexPath.row % buttons.count])
         
         menuCollectionView.selectItem(
             at: indexPath,
@@ -749,6 +718,11 @@ extension HomeSectionsViewController {
             
             return topBoundary > cellMidX  && cellMidX > bottomBoundary
         })
+        
+        if visibleCells.isEmpty == true {
+            print("TEM 0 NAS VISIBLE CELLS")
+            visibleCells.append(menuCollectionView.visibleCells[2])
+        }
         
         visibleCells.forEach({
             if let selectedIndexPath = menuCollectionView.indexPath(for: $0) {
