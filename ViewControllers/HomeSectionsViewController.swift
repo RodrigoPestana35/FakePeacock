@@ -239,6 +239,8 @@ class HomeSectionsViewController: UIViewController{
         view.addSubview(peacockImage)
         view.addSubview(chromecastImage)
         
+        self.menuCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
+        
         NSLayoutConstraint.activate([
             collectionVW.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionVW.topAnchor.constraint(equalTo: view.topAnchor, constant: -45),
