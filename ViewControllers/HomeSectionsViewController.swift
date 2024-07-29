@@ -728,7 +728,7 @@ extension HomeSectionsViewController {
         })
         
         if visibleCells.isEmpty == true {
-            visibleCells.append(menuCollectionView.visibleCells[2])
+            visibleCells.append(menuCollectionView.visibleCells[abs(menuCollectionView.visibleCells.count/2)])
         }
         
         visibleCells.forEach({
