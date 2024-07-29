@@ -247,9 +247,9 @@ class HomeSectionsViewController: UIViewController{
             collectionVW.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionVW.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            menuCollectionView.leadingAnchor.constraint(equalTo: peacockImage.trailingAnchor),
+            menuCollectionView.leadingAnchor.constraint(equalTo: peacockImage.trailingAnchor, constant: 5),
             menuCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -5),
-            menuCollectionView.trailingAnchor.constraint(equalTo: chromecastImage.leadingAnchor),
+            menuCollectionView.trailingAnchor.constraint(equalTo: chromecastImage.leadingAnchor, constant: -5),
             menuCollectionView.heightAnchor.constraint(equalToConstant: 50),
             
             headerMenuLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
