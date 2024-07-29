@@ -166,6 +166,8 @@ class HomeSectionsViewController: UIViewController{
         return blurEffectView
     }()
     
+    private let feedbackGenerator = UISelectionFeedbackGenerator()
+    
     // função que cria o layout com base no tipo de section
     func makeLayout() -> UICollectionViewLayout {
         
@@ -238,6 +240,8 @@ class HomeSectionsViewController: UIViewController{
         view.addSubview(perfilImage)
         view.addSubview(peacockImage)
         view.addSubview(chromecastImage)
+        
+        feedbackGenerator.prepare()
         
         self.menuCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         
@@ -640,7 +644,7 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
             lastUpdateTime = currentTime
             lastContentOffset = scrollView.contentOffset
             
-            // Exemplo de uso da velocidade
+            
             
             if topHeaderIsCurrentScrolling == true {
                 if(scrollSpeed <= 100 && scrollSpeed != 0) {
@@ -689,6 +693,8 @@ extension HomeSectionsViewController {
         selectedCellNameMenu = buttons[indexPath.row % buttons.count]
         selectCategoryHeaderMenu(cell: cell!, category: buttons[indexPath.row % buttons.count])
         
+        feedbackGenerator.selectionChanged()
+        
         menuCollectionView.selectItem(
             at: indexPath,
             animated: animated,
@@ -722,7 +728,6 @@ extension HomeSectionsViewController {
         })
         
         if visibleCells.isEmpty == true {
-            print("TEM 0 NAS VISIBLE CELLS")
             visibleCells.append(menuCollectionView.visibleCells[2])
         }
         
