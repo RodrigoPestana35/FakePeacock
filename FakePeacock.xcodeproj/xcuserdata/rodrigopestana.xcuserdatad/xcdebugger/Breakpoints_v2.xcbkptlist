@@ -142,8 +142,8 @@
             filePath = "ViewControllers/HomeSectionsViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "199"
-            endingLineNumber = "199"
+            startingLineNumber = "205"
+            endingLineNumber = "205"
             landmarkName = "loadView()"
             landmarkType = "7">
          </BreakpointContent>

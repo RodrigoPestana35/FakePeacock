@@ -7,6 +7,7 @@ class TileHighlightCollectionViewCell: UICollectionViewCell {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
         image.clipsToBounds = true
+        image.contentMode = .scaleAspectFit
         return image
     }()
     
@@ -24,7 +25,7 @@ class TileHighlightCollectionViewCell: UICollectionViewCell {
         gradientLayer.colors = [UIColor.black.withAlphaComponent(1).cgColor, UIColor.clear.cgColor]
         gradientLayer.locations = [0.0, 1.0]
         gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
-        gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.25)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.20)
         return gradientLayer
     }()
     
@@ -91,10 +92,10 @@ class TileHighlightCollectionViewCell: UICollectionViewCell {
             infoLabel.trailingAnchor.constraint(equalTo: titleImage.trailingAnchor, constant: -50),
             infoLabel.bottomAnchor.constraint(equalTo: imageTile.bottomAnchor, constant: -70),
             
-            watchButton.leadingAnchor.constraint(equalTo: infoLabel.leadingAnchor, constant: 30),
+            watchButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             watchButton.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 10),
-            watchButton.trailingAnchor.constraint(equalTo: infoLabel.trailingAnchor, constant: -30),
-            watchButton.bottomAnchor.constraint(equalTo: imageTile.bottomAnchor, constant: -20)
+            watchButton.widthAnchor.constraint(equalToConstant: 120),
+            watchButton.heightAnchor.constraint(equalToConstant: 40)
         ])
         
         imageTile.layer.addSublayer(gradientLayerDown)

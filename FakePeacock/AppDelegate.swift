@@ -10,7 +10,12 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
+    // TODO: Fix Carousel Images to use the tablet ones
+    // Make chromecast icon smaller
+    // Fix tile marges and sizes
+    // Make rail header font bold and just a tad bit bigger
+    
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

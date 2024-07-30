@@ -1,14 +1,14 @@
 import UIKit
 
-class MenuButtonCollectionViewCell: UICollectionViewCell {
-    static let identifier = "MenuButtonCell"
+class TopNavigationBarCollectionViewCell: UICollectionViewCell {
+    static let identifier = "TopNavigationBarCollectionViewCell"
         
     let label: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 15, weight: UIFont.Weight.semibold)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.numberOfLines = 1
         return label
     }()
