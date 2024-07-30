@@ -1,19 +1,7 @@
 import UIKit
 import Kingfisher
 
-enum Category: String {
-    case movies
-    case tvShows
-    
-    //    func getText() -> String {
-    //        switch self {
-    //        case .movies: "Movies"
-    //        case .tvShows: "TV Shows"
-    //        }
-    //    }
-}
-
-class HomeSectionsViewController: UIViewController{
+class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
     //view model para obter os dados para os rails
     private let homeViewModel = HomeSectionsViewModelImp()
     
@@ -28,9 +16,11 @@ class HomeSectionsViewController: UIViewController{
         }
     }
     
-    private let buttons = ["Home", "Movies", "TV Shows", "Sports", "WWE", "Olympics", "My Stuff"]
+    private let topNavigationBar = TopNavigationBarView()
     
-    private lazy var totalCels = buttons.count * 10_000
+    private let categories: [Category] = [ .home , .movies, .tvShows, .sports, .wwe, .olympics, .myStuff]
+    
+    private lazy var totalCels = categories.count * 10_000
     
     private var selectedImageTabBarView: UIImageView?
     private var selectedCategory: Category?
@@ -40,7 +30,7 @@ class HomeSectionsViewController: UIViewController{
     private var lastContentOffset: CGPoint = .zero
     private var lastUpdateTime: TimeInterval = 0
     private var scrollSpeed: CGFloat = 0 // Armazena a velocidade atual
-    var topHeaderIsCurrentScrolling = false
+    private var topHeaderIsCurrentScrolling = false
     
     //Rails Collection View
     private lazy var collectionVW: UICollectionView = {
@@ -52,25 +42,6 @@ class HomeSectionsViewController: UIViewController{
         collectionV.dataSource = self
         collectionV.delegate = self
         return collectionV
-    }()
-    //Header Menu Collection View
-    private lazy var menuCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.sectionInset = .init(top: 5, left: 5, bottom: 5, right: 5)
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-        
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.translatesAutoresizingMaskIntoConstraints = false
-        cv.backgroundColor = UIColor.clear.withAlphaComponent(0)
-        cv.dataSource = self
-        cv.delegate = self
-        cv.showsHorizontalScrollIndicator = false
-        cv.delaysContentTouches = false
-        //        cv.isPagingEnabled = true
-        cv.register(MenuButtonCollectionViewCell.self, forCellWithReuseIdentifier: MenuButtonCollectionViewCell.identifier)
-        return cv
     }()
     
     private let tabBarMenu: UILabel = {
@@ -130,7 +101,7 @@ class HomeSectionsViewController: UIViewController{
     private let peacockImage: UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.image = UIImage(systemName: "p.circle")
+        image.image = UIImage(named: "peacockLogoShort")
         image.tintColor = .white
         image.contentMode = .scaleAspectFit
         return image
@@ -138,9 +109,7 @@ class HomeSectionsViewController: UIViewController{
     private let chromecastImage: UIImageView = {
         let cast = UIImageView()
         cast.translatesAutoresizingMaskIntoConstraints = false
-        cast.image = UIImage(systemName: "tv.badge.wifi")
-        cast.tintColor = UIColor(white: 1, alpha: 0)
-        //        cast.tintColor = .white
+        cast.image = UIImage(named: "chromecast_icon_white")
         cast.contentMode = .scaleAspectFit
         return cast
     }()
@@ -226,11 +195,13 @@ class HomeSectionsViewController: UIViewController{
     }
     
     override func viewDidLoad() {
+        topNavigationBar.delegate = self
         view.addSubview(collectionVW)
         collectionVW.backgroundColor = .black
         view.addSubview(headerMenuLabel)
         view.addSubview(blurEffectHeaderMenu)
-        view.addSubview(menuCollectionView)
+        view.addSubview(topNavigationBar)
+        topNavigationBar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tabBarMenu)
         view.addSubview(blurEffectTabBar)
         view.addSubview(homeImage)
@@ -243,28 +214,26 @@ class HomeSectionsViewController: UIViewController{
         
         feedbackGenerator.prepare()
         
-        self.menuCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
-        
         NSLayoutConstraint.activate([
             collectionVW.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionVW.topAnchor.constraint(equalTo: view.topAnchor, constant: -45),
             collectionVW.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionVW.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            menuCollectionView.leadingAnchor.constraint(equalTo: peacockImage.trailingAnchor, constant: 5),
-            menuCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -5),
-            menuCollectionView.trailingAnchor.constraint(equalTo: chromecastImage.leadingAnchor, constant: -5),
-            menuCollectionView.heightAnchor.constraint(equalToConstant: 50),
+            topNavigationBar.leadingAnchor.constraint(equalTo: peacockImage.trailingAnchor, constant: 5),
+            topNavigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -5),
+            topNavigationBar.trailingAnchor.constraint(equalTo: chromecastImage.leadingAnchor, constant: -5),
+            topNavigationBar.heightAnchor.constraint(equalToConstant: 50),
             
             headerMenuLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             headerMenuLabel.topAnchor.constraint(equalTo: view.topAnchor),
             headerMenuLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            headerMenuLabel.bottomAnchor.constraint(equalTo: menuCollectionView.bottomAnchor, constant: 10),
+            headerMenuLabel.bottomAnchor.constraint(equalTo: topNavigationBar.bottomAnchor, constant: 10),
             
             blurEffectHeaderMenu.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             blurEffectHeaderMenu.topAnchor.constraint(equalTo: view.topAnchor),
             blurEffectHeaderMenu.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            blurEffectHeaderMenu.bottomAnchor.constraint(equalTo: menuCollectionView.bottomAnchor, constant: 10),
+            blurEffectHeaderMenu.bottomAnchor.constraint(equalTo: topNavigationBar.bottomAnchor, constant: 10),
             
             peacockImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
             peacockImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -272,9 +241,9 @@ class HomeSectionsViewController: UIViewController{
             peacockImage.heightAnchor.constraint(equalToConstant: 40),
             
             chromecastImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            chromecastImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            chromecastImage.widthAnchor.constraint(equalToConstant: 40),
-            chromecastImage.heightAnchor.constraint(equalToConstant: 40),
+            chromecastImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
+            chromecastImage.widthAnchor.constraint(equalToConstant: 30),
+            chromecastImage.heightAnchor.constraint(equalToConstant: 30),
             
             tabBarMenu.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             tabBarMenu.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
@@ -332,23 +301,21 @@ class HomeSectionsViewController: UIViewController{
         //selecionar por padrão a casinha na tabBar
         selectImageTabBar(imageView: homeImage)
         
-        //selecionar por padrão o Home no headerMenu
-        DispatchQueue.main.async {
-            self.selectDefaultHeaderMenuItem()
-        }
-        
-        lastUpdateTime = CACurrentMediaTime()
-        
+//        //selecionar por padrão o Home no headerMenu
+//        DispatchQueue.main.async {
+//            self.selectDefaultHeaderMenuItem()
+//        }
+                
     }
     
     var controlo = 0
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        scrollViewDidScroll(menuCollectionView)
+//        scrollViewDidScroll(topNavigationBar.menuCollectionView)
         
         if controlo == 0{
-            let startItem: Int = totalCels/2
-            menuCollectionView.scrollToItem(at: IndexPath(item: startItem, section: 0), at: .centeredHorizontally, animated: false)
+//            let startItem: Int = totalCels/2
+//            topNavigationBar.menuCollectionView.scrollToItem(at: IndexPath(item: startItem, section: 0), at: .centeredHorizontally, animated: false)
             collectionVW.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
             controlo=1
         }
@@ -361,49 +328,37 @@ class HomeSectionsViewController: UIViewController{
         selectImageTabBar(imageView: tappedImageView)
     }
     
-    //função que coloca e tira a linha por baixo da categoria e atualiza os dados apresentados
-    private func selectCategoryHeaderMenu(cell: MenuButtonCollectionViewCell, category: String) {
-        //com base na categoria selecionada atualiza a variavel dos dados apresentados com os dados filtrados para essa categoria
-        switch(category) {
-        case "Home":
-            itemsShown = items
-        case "Movies":
-            itemsShown = filterCategory(category: "MOVIES")
-        case "TV Shows":
-            itemsShown = filterCategory(category: "ENTERTAINMENT")
-        case "Sports":
-            itemsShown = filterCategory(category: "SPORTS")
-        default:
+    //função para filtrar os items pela categoria em cada rail
+    func filterCategory(category: Category) -> Void {
+        if .home == category || .wwe == category || .olympics == category || .myStuff == category {
+            // dont filter
             itemsShown = items
         }
-    }
-    
-    //função para filtrar os items pela categoria em cada rail
-    private func filterCategory(category: String) -> [HomeSectionsRailsDto] {
-        var data: [HomeSectionsRailsDto] = []
-        let oldItems: [HomeSectionsRailsDto] = items
-        oldItems.forEach { section in
-            if let a = section.items {
-                let filter = a.filter { $0.classification == category }
-                if !filter.isEmpty {
-                    let filteredSection = HomeSectionsRailsDto(type: section.type, items: filter, title: section.title, renderHint: section.renderHint)
-                    data.append(filteredSection)
+        else{
+            var data: [HomeSectionsRailsDto] = []
+            let oldItems: [HomeSectionsRailsDto] = items
+            oldItems.forEach { section in
+                if let a = section.items {
+                    let filter = a.filter { $0.classification == category.getCategory() }
+                    if !filter.isEmpty {
+                        let filteredSection = HomeSectionsRailsDto(type: section.type, items: filter, title: section.title, renderHint: section.renderHint)
+                        data.append(filteredSection)
+                    }
                 }
             }
+            itemsShown = data
         }
-        return data
     }
     
-    //função para selecionar a categoria Home como default
-    private func selectDefaultHeaderMenuItem() {
-        let indexPath = IndexPath(item: totalCels/2, section: 0)
-        if let cell = menuCollectionView.cellForItem(at: indexPath) as? MenuButtonCollectionViewCell {
-            let category = buttons[0]
-            selectCategoryHeaderMenu(cell: cell, category: category)
-            selectedCellNameMenu = cell.label.text
-            selectedCellIndexPath = indexPath
-        }
-    }
+//    //função para selecionar a categoria Home como default
+//    private func selectDefaultHeaderMenuItem() {
+//        let indexPath = IndexPath(item: totalCels/2, section: 0)
+//        if let cell = topNavigationBar.menuCollectionView.cellForItem(at: indexPath) as? MenuButtonCollectionViewCell {
+//            filterCategory(category: .home)
+//            selectedCellNameMenu = cell.label.text
+//            selectedCellIndexPath = indexPath
+//        }
+//    }
     
     //função para mostrar qual a imagem selecionada
     private func selectImageTabBar(imageView: UIImageView) {
@@ -465,44 +420,11 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
     
     //Declarar o numero de cells em cada section
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == menuCollectionView {
-            return totalCels
-        }
-        else{
             return itemsShown[section].items?.count ?? 0
-        }
-    }
-    
-    //Adiciona o comportamento as celulas quando clicamos nelas
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == menuCollectionView {
-            let category = buttons[indexPath.item % buttons.count]
-            if let cell = collectionView.cellForItem(at: indexPath) as? MenuButtonCollectionViewCell {
-                selectCategoryHeaderMenu(cell: cell, category: category)
-                selectedCellNameMenu = cell.label.text
-                select(row: indexPath.item)
-            }
-        }
     }
     
     //Atribuição de valores as celulas das collection view
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == menuCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MenuButtonCollectionViewCell.identifier, for: indexPath) as! MenuButtonCollectionViewCell
-            cell.isUserInteractionEnabled = true
-            if selectedCellNameMenu == buttons[indexPath.item % buttons.count] {
-                //                cell.configure(title: buttons[indexPath.item % buttons.count], showLine: true)
-                cell.configure(title: buttons[indexPath.item % buttons.count])
-                //                cell.label.font = UIFont.boldSystemFont(ofSize: 16)
-            }
-            else{
-                //                cell.configure(title: buttons[indexPath.item % buttons.count], showLine: false)
-                cell.configure(title: buttons[indexPath.item % buttons.count])
-                //                cell.label.font = UIFont.boldSystemFont(ofSize: 14)
-            }
-            return cell
-        }
-        else{
             if( itemsShown[indexPath.section].renderHint?.template == "HIGHLIGHT" ) {
                 if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TileHighlightCollectionViewCell.identifier, for: indexPath) as? TileHighlightCollectionViewCell {
                     let rail = itemsShown[indexPath.section]
@@ -537,57 +459,13 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
                     return cell
                 }
             }
-        }
         fatalError()
     }
     
     // Declarar o numero de sections
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if collectionView == menuCollectionView {
-            return 1
-        }
-        else {
             return itemsShown.count
-        }
     }
-    
-    //Função do delegate do Header Menu, calcula o tamanho da celula para aparecer todo o texto
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == menuCollectionView {
-            let title = buttons[indexPath.item % buttons.count]
-            let font = UIFont.boldSystemFont(ofSize: 15)
-            let width = title.size(withAttributes: [NSAttributedString.Key.font: font]).width + 24
-            return CGSize(width: width, height: 30)
-            //        return CGSize(width: 70, height: collectionView.frame.height)
-        }
-        else {
-            return CGSize(width: 40, height: 30)
-        }
-    }
-    
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if !decelerate {
-            scrollToCell()
-        }
-        topHeaderIsCurrentScrolling = true
-    }
-    
-    //    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-    //        print("A UIScrollView está prestes a parar de ser arrastada. Velocidade: \(velocity)")
-    //
-    //        // Define um limiar de velocidade baixo para determinar quando a rolagem é lenta
-    //        let lowVelocityThreshold: CGFloat = 1.5
-    //
-    //            // Verifica se a velocidade de rolagem é baixa o suficiente
-    //            if abs(velocity.x) < lowVelocityThreshold {
-    //                print("VELOCIDADE X \(abs(velocity.x))")
-    //                scrollToCell()
-    //            }
-    //    }
-    
-    //    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-    //        scrollToCell()
-    //    }
     
     //    func scrollViewWillEndDragging(
     //        _ scrollView: UIScrollView,
@@ -609,7 +487,6 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
     }
     
     //É chamada sempre que ha scroll, calcula a percentagem de blur e opacidade da do header menu com base no scroll
-    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == collectionVW {
             let contentOffsetY = scrollView.contentOffset.y
@@ -617,43 +494,6 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
             let percentage = min(0.5, contentOffsetY / maxOffset)+0.10
             headerMenuLabel.backgroundColor = UIColor(white: 0, alpha: percentage)
             blurEffectHeaderMenu.alpha = min(maxOffset, contentOffsetY) / maxOffset-0.1
-        }
-        else if scrollView == menuCollectionView {
-            let centerX = scrollView.bounds.size.width/2 + scrollView.contentOffset.x
-            for cell in menuCollectionView.visibleCells as! [MenuButtonCollectionViewCell] {
-                let cellCenterX = cell.center.x
-                let distanceFromCenter = abs(centerX - cellCenterX)
-                let maxDistance = scrollView.bounds.size.width/2
-                let percentage = min(distanceFromCenter / maxDistance, 1)
-                //                let fontSize = 20 - (12 * percentage)
-                let maxFontSize: CGFloat = 20
-                let minFontSize: CGFloat = 14
-                let fontSize = maxFontSize - ((maxFontSize - minFontSize) * percentage)
-                let alpha = 0.3 + ((1 - 0.3) * (1 - percentage))
-                cell.label.font = UIFont.boldSystemFont(ofSize: fontSize)
-                cell.label.alpha = alpha
-            }
-            let currentTime = CACurrentMediaTime()
-            let deltaTime = currentTime - lastUpdateTime
-            let deltaOffset = scrollView.contentOffset.x - lastContentOffset.x
-            
-            // Calcula a velocidade (pixels por segundo)
-            scrollSpeed = abs(deltaOffset / CGFloat(deltaTime))
-            
-            // Atualiza o tempo e deslocamento anteriores
-            lastUpdateTime = currentTime
-            lastContentOffset = scrollView.contentOffset
-            
-            
-            
-            if topHeaderIsCurrentScrolling == true {
-                if(scrollSpeed <= 100 && scrollSpeed != 0) {
-                    scrollToCell()
-                    topHeaderIsCurrentScrolling = false
-                }
-            }
-            
-            
         }
     }
     
@@ -668,75 +508,4 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
 //    }
 //}
 
-extension HomeSectionsViewController {
-    public func select(
-        row: Int,
-        in section: Int = 0,
-        animated: Bool = true
-    ) {
-        // Ensures selected row isnt more then data count
-        guard row < totalCels else { return }
-        
-        // removes any selected items
-        cleanupSelection()
-        
-        // set new selected item
-        let indexPath = IndexPath(row: row, section: section)
-        selectedCellIndexPath = indexPath
-        
-        // Update selected cell
-        let cell = menuCollectionView.cellForItem(at: indexPath) as? MenuButtonCollectionViewCell
-        cell?.configure(
-            title: buttons[indexPath.row % buttons.count]
-            //            showLine: true
-        )
-        selectedCellNameMenu = buttons[indexPath.row % buttons.count]
-        selectCategoryHeaderMenu(cell: cell!, category: buttons[indexPath.row % buttons.count])
-        
-        feedbackGenerator.selectionChanged()
-        
-        menuCollectionView.selectItem(
-            at: indexPath,
-            animated: animated,
-            scrollPosition: .centeredHorizontally)
-    }
-    
-    private func cleanupSelection() {
-        guard let indexPath = selectedCellIndexPath else { return }
-        let cell = menuCollectionView.cellForItem(at: indexPath) as? MenuButtonCollectionViewCell
-        //        cell?.configure(title: buttons[indexPath.row % buttons.count], showLine: false)
-        cell?.configure(title: buttons[indexPath.row % buttons.count])
-        selectedCellIndexPath = nil
-        selectedCellNameMenu = ""
-    }
-    
-    private func scrollToCell() {
-        var indexPath = IndexPath()
-        var visibleCells = menuCollectionView.visibleCells
-        
-        visibleCells = visibleCells.filter({ cell -> Bool in
-            let cellRect = menuCollectionView.convert(
-                cell.frame,
-                to: menuCollectionView.superview
-            )
-            let viewMidX = view.frame.midX
-            let cellMidX = cellRect.midX
-            let topBoundary = viewMidX + cellRect.width/2
-            let bottomBoundary = viewMidX - cellRect.width/2
-            
-            return topBoundary > cellMidX  && cellMidX > bottomBoundary
-        })
-        
-        if visibleCells.isEmpty == true {
-            visibleCells.append(menuCollectionView.visibleCells[abs(menuCollectionView.visibleCells.count/2)])
-        }
-        
-        visibleCells.forEach({
-            if let selectedIndexPath = menuCollectionView.indexPath(for: $0) {
-                indexPath = selectedIndexPath
-            }
-        })
-        
-        self.select(row: indexPath.row)
-    }
-}
+
