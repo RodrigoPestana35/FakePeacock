@@ -300,26 +300,7 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
         
         //selecionar por padrão a casinha na tabBar
         selectImageTabBar(imageView: homeImage)
-        
-//        //selecionar por padrão o Home no headerMenu
-//        DispatchQueue.main.async {
-//            self.selectDefaultHeaderMenuItem()
-//        }
                 
-    }
-    
-    var controlo = 0
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-//        scrollViewDidScroll(topNavigationBar.menuCollectionView)
-        
-        if controlo == 0{
-//            let startItem: Int = totalCels/2
-//            topNavigationBar.menuCollectionView.scrollToItem(at: IndexPath(item: startItem, section: 0), at: .centeredHorizontally, animated: false)
-            collectionVW.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
-            controlo=1
-        }
-        
     }
     
     //função chamada quando o utilizador clica nas imagens da TabBar
@@ -349,16 +330,6 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
             itemsShown = data
         }
     }
-    
-//    //função para selecionar a categoria Home como default
-//    private func selectDefaultHeaderMenuItem() {
-//        let indexPath = IndexPath(item: totalCels/2, section: 0)
-//        if let cell = topNavigationBar.menuCollectionView.cellForItem(at: indexPath) as? MenuButtonCollectionViewCell {
-//            filterCategory(category: .home)
-//            selectedCellNameMenu = cell.label.text
-//            selectedCellIndexPath = indexPath
-//        }
-//    }
     
     //função para mostrar qual a imagem selecionada
     private func selectImageTabBar(imageView: UIImageView) {
@@ -390,29 +361,6 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
             underlineView.heightAnchor.constraint(equalToConstant: 3)
         ])
     }
-    
-    //    lazy var offsets: [CGFloat] = {
-    //        let sizes = buttons.map {
-    //            let font = UIFont.boldSystemFont(ofSize: 16)
-    //            let width = $0.size(withAttributes: [NSAttributedString.Key.font: font]).width + 24
-    //            return width
-    //        }
-    //
-    //        var offsets = [CGFloat]()
-    //        var previous: CGFloat = 20
-    //        for i in 0..<(buttons.count * 10_000) {
-    //            let x = i % buttons.count
-    //            if i == 0 {
-    //                previous += sizes[x]
-    //            } else {
-    //                previous += 10
-    //                offsets.append(previous)
-    //                previous += sizes[x]
-    //            }
-    //        }
-    //        return offsets
-    //    }()
-    
 }
 
 //extensão com os metodos para DelegateFlowLayout e DataSource
@@ -467,16 +415,6 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
             return itemsShown.count
     }
     
-    //    func scrollViewWillEndDragging(
-    //        _ scrollView: UIScrollView,
-    //        withVelocity velocity: CGPoint,
-    //        targetContentOffset: UnsafeMutablePointer<CGPoint>
-    //    ) {
-    //        let desiredX = targetContentOffset.pointee.x
-    //        let firstOffsetX = offsets.first { $0 >= desiredX } ?? .zero
-    //        targetContentOffset.pointee.x = firstOffsetX
-    //    }
-    
     //Adiciona os titulos aos headers
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderSupplementaryView.identifier, for: indexPath) as? HeaderSupplementaryView else {
@@ -498,14 +436,3 @@ extension HomeSectionsViewController: UICollectionViewDataSource, UICollectionVi
     }
     
 }
-
-//extension String {
-//
-//    func widthOfString(usingFont font: UIFont) -> CGFloat {
-//        let fontAttributes = [NSAttributedString.Key.font: font]
-//        let size = self.size(withAttributes: fontAttributes)
-//        return size.width
-//    }
-//}
-
-
