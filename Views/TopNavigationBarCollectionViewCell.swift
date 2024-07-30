@@ -2,6 +2,8 @@ import UIKit
 
 class TopNavigationBarCollectionViewCell: UICollectionViewCell {
     static let identifier = "TopNavigationBarCollectionViewCell"
+    
+    public var cateogry: Category?
         
     let label: UILabel = {
         let label = UILabel()

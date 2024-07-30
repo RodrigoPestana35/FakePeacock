@@ -36,8 +36,8 @@ class TopNavigationBarCollectionView: UICollectionView, UICollectionViewDelegate
     private func selectDefaultHeaderMenuItem() {
         if let cell = self.cellForItem(at: IndexPath(row: 0, section: 0)) as? TopNavigationBarCollectionViewCell {
             delegateVar?.filterCategory(category: .home)
-//            selectedCellNameMenu = cell.label.text
-//            selectedCellIndexPath = IndexPath(row: 0, section: 0)
+            selectedCellNameMenu = Category.home.getText()
+            selectedCellIndexPath = IndexPath(row: 0, section: 0)
             select(row: 0)
         }
     }
@@ -49,16 +49,21 @@ class TopNavigationBarCollectionView: UICollectionView, UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopNavigationBarCollectionViewCell.identifier, for: indexPath) as! TopNavigationBarCollectionViewCell
         cell.isUserInteractionEnabled = true
-        cell.configureWithAlpha(title: categories[indexPath.item].getText(), alpha: 0.3)
+        if selectedCellNameMenu == categories[indexPath.item].getText() {
+            cell.configureWithAlpha(title: categories[indexPath.item].getText(), alpha: 1)
+        }
+        else{
+            cell.configureWithAlpha(title: categories[indexPath.item].getText(), alpha: 0.3)
+        }
         return cell
     }
     
     //Adiciona o comportamento as celulas quando clicamos nelas
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == self {
-            if let cell = collectionView.cellForItem(at: indexPath) as? TopNavigationBarCollectionViewCell {
+//            if let cell = collectionView.cellForItem(at: indexPath) as? TopNavigationBarCollectionViewCell {
                 select(row: indexPath.item)
-            }
+//            }
         }
     }
     
