@@ -22,6 +22,9 @@
 		F9A09EDE2C4127D900D74804 /* HeaderSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A09EDD2C4127D900D74804 /* HeaderSupplementaryView.swift */; };
 		F9A09EE02C41693500D74804 /* RailRenderHintDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A09EDF2C41693500D74804 /* RailRenderHintDto.swift */; };
 		F9A09EE22C4184AB00D74804 /* TileHighlightCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9A09EE12C4184AB00D74804 /* TileHighlightCollectionViewCell.swift */; };
+		F9CB60E62C59757C000A5C15 /* nbcuott_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9CB60E32C59757C000A5C15 /* nbcuott_bold.ttf */; };
+		F9CB60E72C59757C000A5C15 /* nbcuott_book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9CB60E42C59757C000A5C15 /* nbcuott_book.ttf */; };
+		F9CB60E82C59757C000A5C15 /* nbcuott_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F9CB60E52C59757C000A5C15 /* nbcuott_medium.ttf */; };
 		F9FF96142C37FC2200FBEED5 /* SearchPokemonUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FF96132C37FC2200FBEED5 /* SearchPokemonUseCase.swift */; };
 		F9FF96162C37FC6500FBEED5 /* PokemonDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FF96152C37FC6500FBEED5 /* PokemonDto.swift */; };
 		F9FF96182C37FCE900FBEED5 /* PokemonAbilitiesDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FF96172C37FCE900FBEED5 /* PokemonAbilitiesDto.swift */; };
@@ -67,6 +70,9 @@
 		F9A09EDD2C4127D900D74804 /* HeaderSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSupplementaryView.swift; sourceTree = "<group>"; };
 		F9A09EDF2C41693500D74804 /* RailRenderHintDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RailRenderHintDto.swift; sourceTree = "<group>"; };
 		F9A09EE12C4184AB00D74804 /* TileHighlightCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileHighlightCollectionViewCell.swift; sourceTree = "<group>"; };
+		F9CB60E32C59757C000A5C15 /* nbcuott_bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = nbcuott_bold.ttf; sourceTree = "<group>"; };
+		F9CB60E42C59757C000A5C15 /* nbcuott_book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = nbcuott_book.ttf; sourceTree = "<group>"; };
+		F9CB60E52C59757C000A5C15 /* nbcuott_medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = nbcuott_medium.ttf; sourceTree = "<group>"; };
 		F9FF96132C37FC2200FBEED5 /* SearchPokemonUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPokemonUseCase.swift; sourceTree = "<group>"; };
 		F9FF96152C37FC6500FBEED5 /* PokemonDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDto.swift; sourceTree = "<group>"; };
 		F9FF96172C37FCE900FBEED5 /* PokemonAbilitiesDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonAbilitiesDto.swift; sourceTree = "<group>"; };
@@ -130,6 +136,7 @@
 		F9102CFE2C358FDE000A5BE3 /* FakePeacock */ = {
 			isa = PBXGroup;
 			children = (
+				F9CB60E22C597515000A5C15 /* Fonts */,
 				F9102CFF2C358FDE000A5BE3 /* AppDelegate.swift */,
 				F9102D012C358FDE000A5BE3 /* SceneDelegate.swift */,
 				F9102D032C358FDE000A5BE3 /* ViewController.swift */,
@@ -194,6 +201,16 @@
 				F996963B2C5902F900C8D466 /* TopNavigationBarCollectionViewCell.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		F9CB60E22C597515000A5C15 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				F9CB60E32C59757C000A5C15 /* nbcuott_bold.ttf */,
+				F9CB60E42C59757C000A5C15 /* nbcuott_book.ttf */,
+				F9CB60E52C59757C000A5C15 /* nbcuott_medium.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		F9FF96122C37FBFD00FBEED5 /* UseCases */ = {
@@ -281,8 +298,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9102D092C358FE1000A5BE3 /* Assets.xcassets in Resources */,
+				F9CB60E82C59757C000A5C15 /* nbcuott_medium.ttf in Resources */,
 				F9102D0C2C358FE1000A5BE3 /* Base in Resources */,
+				F9CB60E72C59757C000A5C15 /* nbcuott_book.ttf in Resources */,
 				F9102D072C358FDE000A5BE3 /* Base in Resources */,
+				F9CB60E62C59757C000A5C15 /* nbcuott_bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

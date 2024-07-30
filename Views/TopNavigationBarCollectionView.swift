@@ -7,9 +7,7 @@ class TopNavigationBarCollectionView: UICollectionView, UICollectionViewDelegate
     
     private var selectedCellNameMenu: String?
     private var selectedCellIndexPath: IndexPath?
-    
-    private let feedbackGenerator = UISelectionFeedbackGenerator()
-    
+        
     var delegateVar: FilterCategoryDelegate?
     
     init(frame: CGRect){
@@ -95,7 +93,6 @@ extension TopNavigationBarCollectionView {
         cell?.configureWithAlpha(title: categories[indexPath.item].getText(), alpha: 1)
         
         if(selectedCellNameMenu != categories[indexPath.row].getText()){
-            feedbackGenerator.selectionChanged()
             selectedCellNameMenu = categories[indexPath.row].getText()
             delegateVar?.filterCategory(category: categories[indexPath.row % categories.count])
         }

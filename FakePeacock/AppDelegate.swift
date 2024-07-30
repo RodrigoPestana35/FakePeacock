@@ -10,10 +10,10 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    // TODO: Fix Carousel Images to use the tablet ones
-    // Make chromecast icon smaller
-    // Fix tile marges and sizes
-    // Make rail header font bold and just a tad bit bigger
+    // TODO: Fix Carousel Images to use the tablet ones V
+    // Make chromecast icon smaller V
+    // Fix tile marges and sizes V
+    // Make rail header font bold and just a tad bit bigger V
     
     
 

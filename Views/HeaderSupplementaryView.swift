@@ -7,7 +7,7 @@ class HeaderSupplementaryView: UICollectionReusableView {
         let l = UILabel()
         l.translatesAutoresizingMaskIntoConstraints = false
         l.textColor = .white
-//        l.font = UIFont.preferredFont(forTextStyle: .footnote)
+        l.font = UIFont(name: "nbcuott_bold", size: 20)
         return l
     }()
     

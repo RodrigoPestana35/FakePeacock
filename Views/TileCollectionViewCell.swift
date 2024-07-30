@@ -28,20 +28,20 @@ class TileCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        self.backgroundColor = .red
+        self.backgroundColor = UIColor(red: 0.0667, green: 0.0667, blue: 0.0667, alpha: 1.0)
         self.layer.cornerRadius = 9
         self.addSubview(titleLabel)
         self.addSubview(imageTile)
         
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: imageTile.leadingAnchor),
-            titleLabel.topAnchor.constraint(equalTo: imageTile.topAnchor, constant: 110),
-            titleLabel.trailingAnchor.constraint(equalTo: imageTile.trailingAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: imageTile.bottomAnchor),
             imageTile.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             imageTile.topAnchor.constraint(equalTo: self.topAnchor),
             imageTile.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            imageTile.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            imageTile.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: imageTile.leadingAnchor),
+            titleLabel.heightAnchor.constraint(equalToConstant: 25),
+            titleLabel.trailingAnchor.constraint(equalTo: imageTile.trailingAnchor),
+            titleLabel.bottomAnchor.constraint(equalTo: imageTile.bottomAnchor)
         ])
     }
     

@@ -69,7 +69,7 @@ class TileHighlightCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        self.backgroundColor = .blue
+        self.backgroundColor = UIColor(red: 0.0667, green: 0.0667, blue: 0.0667, alpha: 1.0)
         self.layer.cornerRadius = 9
         self.addSubview(imageTile)
         self.addSubview(titleImage)
