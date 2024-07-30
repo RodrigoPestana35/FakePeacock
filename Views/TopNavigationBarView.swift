@@ -87,7 +87,6 @@ class TopNavigationBarView: UIView {
             self.selectDefaultHeaderMenuItem()
             self.scrollViewDidScroll(self.menuCollectionView)
         }
-        lastUpdateTime = CACurrentMediaTime()
     }
     
     required init?(coder: NSCoder) {

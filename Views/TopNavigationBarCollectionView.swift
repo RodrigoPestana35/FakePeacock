@@ -3,11 +3,14 @@ import UIKit
 class TopNavigationBarCollectionView: UICollectionView, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     //botões para o header menu
-    private let categories: [Category] = [ .home , .movies, .tvShows, .sports, .wwe, .olympics, .myStuff]
+    private let categories: [Category] = [.home , .movies, .tvShows, .sports, .wwe, .olympics, .myStuff, .olympics]
     
     private var selectedCellNameMenu: String?
     private var selectedCellIndexPath: IndexPath?
     
+    private let feedbackGenerator = UISelectionFeedbackGenerator()
+    
+    var delegateVar: FilterCategoryDelegate?
     
     init(frame: CGRect){
         let layout = UICollectionViewFlowLayout()
@@ -20,10 +23,23 @@ class TopNavigationBarCollectionView: UICollectionView, UICollectionViewDelegate
         self.dataSource = self
         self.showsHorizontalScrollIndicator = false
         self.register(TopNavigationBarCollectionViewCell.self, forCellWithReuseIdentifier: TopNavigationBarCollectionViewCell.identifier)
+        
+        DispatchQueue.main.async {
+            self.selectDefaultHeaderMenuItem()
+        }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func selectDefaultHeaderMenuItem() {
+        if let cell = self.cellForItem(at: IndexPath(row: 0, section: 0)) as? TopNavigationBarCollectionViewCell {
+            delegateVar?.filterCategory(category: .home)
+//            selectedCellNameMenu = cell.label.text
+//            selectedCellIndexPath = IndexPath(row: 0, section: 0)
+            select(row: 0)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -33,13 +49,17 @@ class TopNavigationBarCollectionView: UICollectionView, UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopNavigationBarCollectionViewCell.identifier, for: indexPath) as! TopNavigationBarCollectionViewCell
         cell.isUserInteractionEnabled = true
-        if selectedCellNameMenu == categories[indexPath.item].getText() {
-            cell.configure(title: categories[indexPath.item].getText())
-        }
-        else{
-            cell.configure(title: categories[indexPath.item].getText())
-        }
+        cell.configureWithAlpha(title: categories[indexPath.item].getText(), alpha: 0.3)
         return cell
+    }
+    
+    //Adiciona o comportamento as celulas quando clicamos nelas
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == self {
+            if let cell = collectionView.cellForItem(at: indexPath) as? TopNavigationBarCollectionViewCell {
+                select(row: indexPath.item)
+            }
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -53,75 +73,36 @@ class TopNavigationBarCollectionView: UICollectionView, UICollectionViewDelegate
     
 }
 extension TopNavigationBarCollectionView {
-//    public func select(
-//        row: Int,
-//        in section: Int = 0,
-//        animated: Bool = true
-//    ) {
-//        // removes any selected items
-//        cleanupSelection()
-//        
-//        // set new selected item
-//        let indexPath = IndexPath(row: row, section: section)
-//        selectedCellIndexPath = indexPath
-//        
-//        // Update selected cell
-//        let cell = menuCollectionView.cellForItem(at: indexPath) as? MenuButtonCollectionViewCell
-//        cell?.configure(
-//            title: categories[indexPath.row % categories.count].getText()
-//            //            showLine: true
-//        )
-//        
-//        if(selectedCellNameMenu != categories[indexPath.row % categories.count].getText()){
-//            feedbackGenerator.selectionChanged()
-//            selectedCellNameMenu = categories[indexPath.row % categories.count].getText()
-//            delegate?.filterCategory(category: categories[indexPath.row % categories.count])
-//        }
-//        
-//        menuCollectionView.selectItem(
-//            at: indexPath,
-//            animated: animated,
-//            scrollPosition: .centeredHorizontally)
-//        
-//    }
-    
-//    private func cleanupSelection() {
-//        guard let indexPath = selectedCellIndexPath else { return }
-//        let cell = menuCollectionView.cellForItem(at: indexPath) as? MenuButtonCollectionViewCell
-//        //        cell?.configure(title: buttons[indexPath.row % buttons.count], showLine: false)
-//        cell?.configure(title: categories[indexPath.row % categories.count].getText())
-//        selectedCellIndexPath = nil
-////        selectedCellNameMenu = ""
+    public func select(
+        row: Int,
+        in section: Int = 0,
+        animated: Bool = true
+    ) {
+        // removes any selected items
+        cleanupSelection()
+        
+        // set new selected item
+        let indexPath = IndexPath(row: row, section: section)
+        selectedCellIndexPath = indexPath
+        
+        // Update selected cell
+        let cell = self.cellForItem(at: indexPath) as? TopNavigationBarCollectionViewCell
+        cell?.configureWithAlpha(title: categories[indexPath.item].getText(), alpha: 1)
+        
+        if(selectedCellNameMenu != categories[indexPath.row].getText()){
+            feedbackGenerator.selectionChanged()
+            selectedCellNameMenu = categories[indexPath.row].getText()
+            delegateVar?.filterCategory(category: categories[indexPath.row % categories.count])
+        }
+        
     }
     
-//    private func scrollToCell() {
-//        var indexPath = IndexPath()
-//        var visibleCells = menuCollectionView.visibleCells
-//        
-//        visibleCells = visibleCells.filter({ cell -> Bool in
-//            let cellRect = menuCollectionView.convert(
-//                cell.frame,
-//                to: self
-//            )
-//            let viewMidX = self.bounds.midX
-//            let cellMidX = cellRect.midX
-//            let topBoundary = viewMidX + cellRect.width/2
-//            let bottomBoundary = viewMidX - cellRect.width/2
-//            
-//            return topBoundary > cellMidX  && cellMidX > bottomBoundary
-//        })
-//        
-//        if visibleCells.isEmpty == true {
-//            visibleCells.append(menuCollectionView.visibleCells[abs(menuCollectionView.visibleCells.count/2)])
-//        }
-//        
-//        visibleCells.forEach({
-//            if let selectedIndexPath = menuCollectionView.indexPath(for: $0) {
-//                indexPath = selectedIndexPath
-//            }
-//        })
-//        
-//        self.select(row: indexPath.row)
-//    }
+    private func cleanupSelection() {
+        guard let indexPath = selectedCellIndexPath else { return }
+        let cell = self.cellForItem(at: indexPath) as? TopNavigationBarCollectionViewCell
+        //        cell?.configure(title: buttons[indexPath.row % buttons.count], showLine: false)
+        cell?.configureWithAlpha(title: categories[indexPath.row].getText(), alpha: 0.3)
+        selectedCellIndexPath = nil
+    }
     
-//}
+}

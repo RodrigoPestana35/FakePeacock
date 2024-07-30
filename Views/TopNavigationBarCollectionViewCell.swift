@@ -9,6 +9,7 @@ class TopNavigationBarCollectionViewCell: UICollectionViewCell {
         label.textColor = .white
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textColor = UIColor(white: 1, alpha: 0.4)
         label.numberOfLines = 1
         return label
     }()
@@ -64,6 +65,11 @@ class TopNavigationBarCollectionViewCell: UICollectionViewCell {
         title: String
     ) {
         label.text = "\(title)"
+    }
+    
+    func configureWithAlpha(title: String, alpha: CGFloat) {
+        label.text = "\(title)"
+        label.textColor = UIColor(white: 1, alpha: alpha)
     }
         
 //    func showLine(_ showLine: Bool){

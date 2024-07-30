@@ -22,10 +22,6 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
     private let topNavigationBar = TopNavigationBarView()
     private var topNavigationBarCollectionView: TopNavigationBarCollectionView!
     
-    private let categories: [Category] = [ .home , .movies, .tvShows, .sports, .wwe, .olympics, .myStuff]
-    
-    private lazy var totalCels = categories.count * 10_000
-    
     private var typeHighlightedImage: String = ""
     
     private var selectedImageTabBarView: UIImageView?
@@ -230,6 +226,7 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
             print("TABLET")
             typeHighlightedImage = "landscape"
             topNavigationBarCollectionView = TopNavigationBarCollectionView(frame: self.view.bounds)
+            topNavigationBarCollectionView.delegateVar = self
             view.addSubview(topNavigationBarCollectionView)
             topNavigationBarCollectionView.translatesAutoresizingMaskIntoConstraints = false
             NSLayoutConstraint.activate([
@@ -406,10 +403,14 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
         ]
         
         landscapeConstraints = [
-            topNavigationBarCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            topNavigationBarCollectionView.widthAnchor.constraint(
+//                equalToConstant: view.frame.size.width - chromecastImage.frame.size.width - peacockImage.frame.size.width
+//            ),
+//            topNavigationBarCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             topNavigationBarCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
-            topNavigationBarCollectionView.widthAnchor.constraint(equalToConstant: 600),
-            topNavigationBarCollectionView.heightAnchor.constraint(equalToConstant: 50)
+            topNavigationBarCollectionView.heightAnchor.constraint(equalToConstant: 50),
+            topNavigationBarCollectionView.leadingAnchor.constraint(equalTo: peacockImage.trailingAnchor, constant: 20),
+            topNavigationBarCollectionView.trailingAnchor.constraint(equalTo: chromecastImage.leadingAnchor, constant: -20)
         ]
         
         updateTopNavigationBarCollectionViewOrientation()
@@ -420,6 +421,11 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
         
         if UIApplication.shared.statusBarOrientation.isLandscape {
             print("LANDSCAPE")
+            let offset = (topNavigationBarCollectionView.frame.width - topNavigationBarCollectionView.contentSize.width) / 2
+            topNavigationBarCollectionView.contentOffset = CGPoint(
+                x: -offset,
+                y: topNavigationBarCollectionView.contentOffset.y
+            )
             NSLayoutConstraint.activate(landscapeConstraints)
         }
         else {
