@@ -183,6 +183,14 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
         return section
     }
     
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
     override func loadView() {
         super.loadView()
         
@@ -281,6 +289,16 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
             perfilImage.heightAnchor.constraint(equalToConstant: 30),
             
         ])
+        
+        if UITraitCollection.current.horizontalSizeClass == .regular && UITraitCollection.current.verticalSizeClass == .regular {
+            print("TABLET")
+            NSLayoutConstraint.activate([
+                topNavigationBar.leadingAnchor.constraint(equalTo: peacockImage.trailingAnchor, constant: 50),
+                topNavigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+                topNavigationBar.trailingAnchor.constraint(equalTo: chromecastImage.leadingAnchor, constant: -50),
+                topNavigationBar.heightAnchor.constraint(equalToConstant: 50)
+            ])
+        }
         
         //adiciona comportamento aos botões da tabBar
         let homeTapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTappedTabBar(_:)))
