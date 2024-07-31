@@ -10,6 +10,8 @@ class TopNavigationBarCollectionView: UICollectionView, UICollectionViewDelegate
         
     var delegateVar: FilterCategoryDelegate?
     
+    var firstTime = true
+    
     init(frame: CGRect){
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -22,9 +24,13 @@ class TopNavigationBarCollectionView: UICollectionView, UICollectionViewDelegate
         self.showsHorizontalScrollIndicator = false
         self.register(TopNavigationBarCollectionViewCell.self, forCellWithReuseIdentifier: TopNavigationBarCollectionViewCell.identifier)
         
-        DispatchQueue.main.async {
-            self.selectDefaultHeaderMenuItem()
+        if firstTime {
+            DispatchQueue.main.async {
+                self.selectDefaultHeaderMenuItem()
+            }
+            firstTime = false
         }
+        
     }
     
     required init?(coder: NSCoder) {

@@ -16,18 +16,12 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
         }
     }
     
-    private var portraitConstraints: [NSLayoutConstraint] = []
-    private var landscapeConstraints: [NSLayoutConstraint] = []
-    
     private let topNavigationBar = TopNavigationBarView()
     private var topNavigationBarCollectionView: TopNavigationBarCollectionView!
     
     private var typeHighlightedImage: String = ""
     
     private var selectedImageTabBarView: UIImageView?
-    private var selectedCategory: Category?
-    private var selectedCellNameMenu: String?
-    private var selectedCellIndexPath: IndexPath?
     
     private var lastContentOffset: CGPoint = .zero
     private var lastUpdateTime: TimeInterval = 0
@@ -236,151 +230,10 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
         if UITraitCollection.current.horizontalSizeClass == .regular && UITraitCollection.current.verticalSizeClass == .regular {
             print("TABLET")
             typeHighlightedImage = "landscape"
-//            topNavigationBarCollectionView = TopNavigationBarCollectionView(frame: self.view.bounds)
-//            topNavigationBarCollectionView.delegateVar = self
-//            view.addSubview(topNavigationBarCollectionView)
-//            topNavigationBarCollectionView.translatesAutoresizingMaskIntoConstraints = false
-//            NSLayoutConstraint.activate([
-//                collectionVW.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//                collectionVW.topAnchor.constraint(equalTo: view.topAnchor, constant: -45),
-//                collectionVW.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//                collectionVW.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-//                
-////                topNavigationBarCollectionView.leadingAnchor.constraint(equalTo: peacockImage.trailingAnchor, constant: 20),
-////                topNavigationBarCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
-////                topNavigationBarCollectionView.trailingAnchor.constraint(equalTo: chromecastImage.leadingAnchor, constant: -20),
-////                topNavigationBarCollectionView.heightAnchor.constraint(equalToConstant: 50),
-//                
-//                headerMenuLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//                headerMenuLabel.topAnchor.constraint(equalTo: view.topAnchor),
-//                headerMenuLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//                headerMenuLabel.bottomAnchor.constraint(equalTo: topNavigationBarCollectionView.bottomAnchor, constant: 10),
-//                
-//                blurEffectHeaderMenu.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//                blurEffectHeaderMenu.topAnchor.constraint(equalTo: view.topAnchor),
-//                blurEffectHeaderMenu.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//                blurEffectHeaderMenu.bottomAnchor.constraint(equalTo: topNavigationBarCollectionView.bottomAnchor, constant: 10),
-//                
-//                peacockImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//                peacockImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-//                peacockImage.widthAnchor.constraint(equalToConstant: 40),
-//                peacockImage.heightAnchor.constraint(equalToConstant: 40),
-//                
-//                chromecastImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//                chromecastImage.centerYAnchor.constraint(equalTo: peacockImage.centerYAnchor),
-//                chromecastImage.widthAnchor.constraint(equalToConstant: 25),
-//                chromecastImage.heightAnchor.constraint(equalToConstant: 25),
-//                
-//                tabBarMenu.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//                tabBarMenu.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
-//                tabBarMenu.widthAnchor.constraint(equalToConstant: 600),
-//                tabBarMenu.heightAnchor.constraint(equalToConstant: 80),
-//                
-//                blurEffectTabBar.leadingAnchor.constraint(equalTo: tabBarMenu.leadingAnchor),
-//                blurEffectTabBar.trailingAnchor.constraint(equalTo: tabBarMenu.trailingAnchor),
-//                blurEffectTabBar.bottomAnchor.constraint(equalTo: tabBarMenu.bottomAnchor),
-//                blurEffectTabBar.topAnchor.constraint(equalTo: tabBarMenu.topAnchor),
-//                
-//                homeImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
-//                homeImage.leadingAnchor.constraint(equalTo: tabBarMenu.leadingAnchor, constant: 66),
-//                homeImage.widthAnchor.constraint(equalToConstant: 40),
-//                homeImage.heightAnchor.constraint(equalToConstant: 40),
-//                
-//                tvImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
-//                tvImage.leadingAnchor.constraint(equalTo: homeImage.trailingAnchor, constant: 66),
-//                tvImage.widthAnchor.constraint(equalToConstant: 40),
-//                tvImage.heightAnchor.constraint(equalToConstant: 40),
-//                
-//                searchImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
-//                searchImage.leadingAnchor.constraint(equalTo: tvImage.trailingAnchor, constant: 66),
-//                searchImage.widthAnchor.constraint(equalToConstant: 40),
-//                searchImage.heightAnchor.constraint(equalToConstant: 40),
-//                
-//                downloadImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
-//                downloadImage.leadingAnchor.constraint(equalTo: searchImage.trailingAnchor, constant: 66),
-//                downloadImage.widthAnchor.constraint(equalToConstant: 40),
-//                downloadImage.heightAnchor.constraint(equalToConstant: 40),
-//                
-//                perfilImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
-//                perfilImage.leadingAnchor.constraint(equalTo: downloadImage.trailingAnchor, constant: 66),
-//                perfilImage.widthAnchor.constraint(equalToConstant: 40),
-//                perfilImage.heightAnchor.constraint(equalToConstant: 40),
-//                
-//            ])
-//            setupTopNavigationBarCollectionViewConstraints()
         }
         else{
             print("IPHONE")
             typeHighlightedImage = "nonTitleArt34"
-//            view.addSubview(topNavigationBar)
-//            topNavigationBar.translatesAutoresizingMaskIntoConstraints = false
-//            NSLayoutConstraint.activate([
-//                collectionVW.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//                collectionVW.topAnchor.constraint(equalTo: view.topAnchor, constant: -45),
-//                collectionVW.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//                collectionVW.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-//                
-//                topNavigationBar.leadingAnchor.constraint(equalTo: peacockImage.trailingAnchor, constant: 5),
-//                topNavigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -5),
-//                topNavigationBar.trailingAnchor.constraint(equalTo: chromecastImage.leadingAnchor, constant: -5),
-//                topNavigationBar.heightAnchor.constraint(equalToConstant: 50),
-//                
-//                headerMenuLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//                headerMenuLabel.topAnchor.constraint(equalTo: view.topAnchor),
-//                headerMenuLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//                headerMenuLabel.bottomAnchor.constraint(equalTo: topNavigationBar.bottomAnchor, constant: 10),
-//                
-//                blurEffectHeaderMenu.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//                blurEffectHeaderMenu.topAnchor.constraint(equalTo: view.topAnchor),
-//                blurEffectHeaderMenu.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//                blurEffectHeaderMenu.bottomAnchor.constraint(equalTo: topNavigationBar.bottomAnchor, constant: 10),
-//                
-//                peacockImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-//                peacockImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-//                peacockImage.widthAnchor.constraint(equalToConstant: 40),
-//                peacockImage.heightAnchor.constraint(equalToConstant: 40),
-//                
-//                chromecastImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-//                chromecastImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
-//                chromecastImage.widthAnchor.constraint(equalToConstant: 30),
-//                chromecastImage.heightAnchor.constraint(equalToConstant: 30),
-//                
-//                tabBarMenu.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//                tabBarMenu.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//                tabBarMenu.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
-//                tabBarMenu.topAnchor.constraint(equalTo: view.topAnchor, constant: 730),
-//                
-//                blurEffectTabBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//                blurEffectTabBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-//                blurEffectTabBar.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
-//                blurEffectTabBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 730),
-//                
-//                homeImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
-//                homeImage.leadingAnchor.constraint(equalTo: tabBarMenu.leadingAnchor, constant: 40),
-//                homeImage.widthAnchor.constraint(equalToConstant: 30),
-//                homeImage.heightAnchor.constraint(equalToConstant: 30),
-//                
-//                tvImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
-//                tvImage.leadingAnchor.constraint(equalTo: homeImage.trailingAnchor, constant: 30),
-//                tvImage.widthAnchor.constraint(equalToConstant: 30),
-//                tvImage.heightAnchor.constraint(equalToConstant: 30),
-//                
-//                searchImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
-//                searchImage.leadingAnchor.constraint(equalTo: tvImage.trailingAnchor, constant: 30),
-//                searchImage.widthAnchor.constraint(equalToConstant: 30),
-//                searchImage.heightAnchor.constraint(equalToConstant: 30),
-//                
-//                downloadImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
-//                downloadImage.leadingAnchor.constraint(equalTo: searchImage.trailingAnchor, constant: 30),
-//                downloadImage.widthAnchor.constraint(equalToConstant: 30),
-//                downloadImage.heightAnchor.constraint(equalToConstant: 30),
-//                
-//                perfilImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
-//                perfilImage.leadingAnchor.constraint(equalTo: downloadImage.trailingAnchor, constant: 30),
-//                perfilImage.widthAnchor.constraint(equalToConstant: 30),
-//                perfilImage.heightAnchor.constraint(equalToConstant: 30),
-//                
-//            ])
         }
         NSLayoutConstraint.activate([
             collectionVW.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -476,42 +329,22 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
     }
     
     private func setupCollectioViews() {
-//        topNavigationBar.delegate = self
-//        topNavigationBarCollectionView = TopNavigationBarCollectionView(frame: self.view.bounds)
-//        topNavigationBarCollectionView.delegateVar = self
-//        topNavigationBar.translatesAutoresizingMaskIntoConstraints = false
-//        topNavigationBar.isHidden = true
-//        self.view.addSubview(topNavigationBar)
-//        self.view.addSubview(topNavigationBarCollectionView)
-//        NSLayoutConstraint.activate([
-//            topNavigationBar.leadingAnchor.constraint(equalTo: peacockImage.trailingAnchor, constant: 5),
-//            topNavigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -5),
-//            topNavigationBar.trailingAnchor.constraint(equalTo: chromecastImage.leadingAnchor, constant: -5),
-//            topNavigationBar.heightAnchor.constraint(equalToConstant: 50),
-//            
-//            topNavigationBarCollectionView.leadingAnchor.constraint(equalTo: peacockImage.trailingAnchor, constant: 5),
-//            topNavigationBarCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -5),
-//            topNavigationBarCollectionView.trailingAnchor.constraint(equalTo: chromecastImage.leadingAnchor, constant: -5),
-//            topNavigationBarCollectionView.heightAnchor.constraint(equalToConstant: 50)
-//        ])
-        
         DispatchQueue.main.async {
             if self.isScrollable(collectionView: self.topNavigationBarCollectionView) {
                 self.replaceCollectionView()
             }
             else {
+                if UIApplication.shared.statusBarOrientation.isLandscape {
+                    print("LANDSCAPE")
+                    let offset = (self.topNavigationBarCollectionView.frame.width - self.topNavigationBarCollectionView.contentSize.width) / 2
+                        self.topNavigationBarCollectionView.contentOffset = CGPoint(
+                        x: -offset,
+                        y: self.topNavigationBarCollectionView.contentOffset.y
+                    )
+                }
                 self.topNavigationBar.isHidden = true
                 self.topNavigationBarCollectionView.isHidden = false
             }
-        }
-        
-        if UIApplication.shared.statusBarOrientation.isLandscape {
-            print("LANDSCAPE")
-            let offset = (topNavigationBarCollectionView.frame.width - topNavigationBarCollectionView.contentSize.width) / 2
-            topNavigationBarCollectionView.contentOffset = CGPoint(
-                x: -offset,
-                y: topNavigationBarCollectionView.contentOffset.y
-            )
         }
     }
     
@@ -524,89 +357,15 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
     }
     
     private func replaceCollectionView() {
-//        topNavigationBarCollectionView.removeFromSuperview()
         topNavigationBarCollectionView.isHidden = true
         
         topNavigationBar.isHidden = false
         topNavigationBar.frame = topNavigationBarCollectionView.frame
     }
     
-//    private func setupTopNavigationBarCollectionViewConstraints() {
-//        portraitConstraints = [
-//            topNavigationBarCollectionView.leadingAnchor.constraint(equalTo: peacockImage.trailingAnchor, constant: 20),
-//            topNavigationBarCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
-//            topNavigationBarCollectionView.trailingAnchor.constraint(equalTo: chromecastImage.leadingAnchor, constant: -20),
-//            topNavigationBarCollectionView.heightAnchor.constraint(equalToConstant: 50)
-//        ]
-//        
-//        landscapeConstraints = [
-////            topNavigationBarCollectionView.widthAnchor.constraint(
-////                equalToConstant: view.frame.size.width - chromecastImage.frame.size.width - peacockImage.frame.size.width
-////            ),
-////            topNavigationBarCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            topNavigationBarCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
-//            topNavigationBarCollectionView.heightAnchor.constraint(equalToConstant: 50),
-//            topNavigationBarCollectionView.leadingAnchor.constraint(equalTo: peacockImage.trailingAnchor, constant: 20),
-//            topNavigationBarCollectionView.trailingAnchor.constraint(equalTo: chromecastImage.leadingAnchor, constant: -20)
-//        ]
-//        
-//        updateTopNavigationBarCollectionViewOrientation()
-//    }
-    
-//    private func updateTopNavigationBarCollectionViewOrientation() {
-//        NSLayoutConstraint.deactivate(portraitConstraints + landscapeConstraints)
-//        
-//        if UIApplication.shared.statusBarOrientation.isLandscape {
-//            print("LANDSCAPE")
-//            let offset = (topNavigationBarCollectionView.frame.width - topNavigationBarCollectionView.contentSize.width) / 2
-//            topNavigationBarCollectionView.contentOffset = CGPoint(
-//                x: -offset,
-//                y: topNavigationBarCollectionView.contentOffset.y
-//            )
-//            NSLayoutConstraint.activate(landscapeConstraints)
-//        }
-//        else {
-//            print("PORTRAIT")
-//            NSLayoutConstraint.activate(portraitConstraints)
-//        }
-//        
-//        view.layoutIfNeeded()
-//    }
-    
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {
         print("CCCCCC")
         super.viewWillTransition(to: size, with: coordinator)
-//        if UIApplication.shared.statusBarOrientation.isLandscape {
-//            print("LANDSCAPE")
-//        }
-//        else {
-//            print("PORTRAIT")
-//        }
-//        topNavigationBarCollectionView.isHidden = false
-        setupCollectioViews()
-//
-//        
-//        if UIDevice.current.orientation.isLandscape{
-//            print("Landscape")
-//            NSLayoutConstraint.activate([
-//                topNavigationBarCollectionView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//                topNavigationBarCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
-//                topNavigationBarCollectionView.heightAnchor.constraint(equalToConstant: 50)
-//            ])
-//        }
-//        else{
-//            print("Portrait")
-//            NSLayoutConstraint.activate([
-//                topNavigationBarCollectionView.leadingAnchor.constraint(equalTo: peacockImage.trailingAnchor, constant: 20),
-//                topNavigationBarCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
-//                topNavigationBarCollectionView.trailingAnchor.constraint(equalTo: chromecastImage.leadingAnchor, constant: -20),
-//                topNavigationBarCollectionView.heightAnchor.constraint(equalToConstant: 50)
-//            ])
-//        }
-    }
-    
-    override func viewWillLayoutSubviews() {
-        print("DDDDDDD")
         setupCollectioViews()
     }
     

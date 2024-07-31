@@ -52,6 +52,7 @@ class TopNavigationBarView: UIView {
     
     var delegate: FilterCategoryDelegate?
     
+    var firstTime = true
     lazy var menuCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -83,10 +84,15 @@ class TopNavigationBarView: UIView {
         ])
         
         lastUpdateTime = CACurrentMediaTime()
-        DispatchQueue.main.async {
-            self.selectDefaultHeaderMenuItem()
-            self.scrollViewDidScroll(self.menuCollectionView)
+
+        if firstTime {
+            DispatchQueue.main.async {
+                self.selectDefaultHeaderMenuItem()
+                self.scrollViewDidScroll(self.menuCollectionView)
+            }
+            firstTime = false
         }
+        
     }
     
     required init?(coder: NSCoder) {
