@@ -99,19 +99,26 @@ class TopNavigationBarView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    var control = true
     override func layoutSubviews() {
         super.layoutSubviews()
+        print("SUBVIEWS")
         
         self.menuCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         
-        let startItem: Int = totalCels/2
-        menuCollectionView.scrollToItem(at: IndexPath(item: startItem, section: 0), at: .centeredHorizontally, animated: false)
+        if control {
+            let startItem: Int = totalCels/2
+            menuCollectionView.scrollToItem(at: IndexPath(item: startItem, section: 0), at: .centeredHorizontally, animated: false)
+            control = false
+        }
+        
         
     }
     
     
     
     private func selectDefaultHeaderMenuItem() {
+        print("DEFAULT")
         let indexPath = IndexPath(item: totalCels/2, section: 0)
         if let cell = menuCollectionView.cellForItem(at: indexPath) as? MenuButtonCollectionViewCell {
             delegate?.filterCategory(category: .home)
