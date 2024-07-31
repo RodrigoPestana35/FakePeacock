@@ -22,6 +22,8 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
     private var typeHighlightedImage: String = ""
     
     private var selectedImageTabBarView: UIImageView?
+    private var selectedCellNameMenu: String?
+    private var selectedCellIndexPath: IndexPath?
     
     private var lastContentOffset: CGPoint = .zero
     private var lastUpdateTime: TimeInterval = 0
@@ -230,10 +232,82 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
         if UITraitCollection.current.horizontalSizeClass == .regular && UITraitCollection.current.verticalSizeClass == .regular {
             print("TABLET")
             typeHighlightedImage = "landscape"
+            NSLayoutConstraint.activate([
+                tabBarMenu.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                tabBarMenu.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+                tabBarMenu.widthAnchor.constraint(equalToConstant: 600),
+                tabBarMenu.heightAnchor.constraint(equalToConstant: 80),
+                
+                blurEffectTabBar.leadingAnchor.constraint(equalTo: tabBarMenu.leadingAnchor),
+                blurEffectTabBar.trailingAnchor.constraint(equalTo: tabBarMenu.trailingAnchor),
+                blurEffectTabBar.bottomAnchor.constraint(equalTo: tabBarMenu.bottomAnchor),
+                blurEffectTabBar.topAnchor.constraint(equalTo: tabBarMenu.topAnchor),
+                
+                homeImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
+                homeImage.leadingAnchor.constraint(equalTo: tabBarMenu.leadingAnchor, constant: 66),
+                homeImage.widthAnchor.constraint(equalToConstant: 40),
+                homeImage.heightAnchor.constraint(equalToConstant: 40),
+                
+                tvImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
+                tvImage.leadingAnchor.constraint(equalTo: homeImage.trailingAnchor, constant: 66),
+                tvImage.widthAnchor.constraint(equalToConstant: 40),
+                tvImage.heightAnchor.constraint(equalToConstant: 40),
+                
+                searchImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
+                searchImage.leadingAnchor.constraint(equalTo: tvImage.trailingAnchor, constant: 66),
+                searchImage.widthAnchor.constraint(equalToConstant: 40),
+                searchImage.heightAnchor.constraint(equalToConstant: 40),
+                
+                downloadImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
+                downloadImage.leadingAnchor.constraint(equalTo: searchImage.trailingAnchor, constant: 66),
+                downloadImage.widthAnchor.constraint(equalToConstant: 40),
+                downloadImage.heightAnchor.constraint(equalToConstant: 40),
+                
+                perfilImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
+                perfilImage.leadingAnchor.constraint(equalTo: downloadImage.trailingAnchor, constant: 66),
+                perfilImage.widthAnchor.constraint(equalToConstant: 40),
+                perfilImage.heightAnchor.constraint(equalToConstant: 40),
+            ])
         }
         else{
             print("IPHONE")
             typeHighlightedImage = "nonTitleArt34"
+            NSLayoutConstraint.activate([
+                tabBarMenu.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                tabBarMenu.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+                tabBarMenu.widthAnchor.constraint(equalToConstant: 350),
+                tabBarMenu.heightAnchor.constraint(equalToConstant: 70),
+                
+                blurEffectTabBar.leadingAnchor.constraint(equalTo: tabBarMenu.leadingAnchor),
+                blurEffectTabBar.trailingAnchor.constraint(equalTo: tabBarMenu.trailingAnchor),
+                blurEffectTabBar.bottomAnchor.constraint(equalTo: tabBarMenu.bottomAnchor),
+                blurEffectTabBar.topAnchor.constraint(equalTo: tabBarMenu.topAnchor),
+                
+                homeImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
+                homeImage.leadingAnchor.constraint(equalTo: tabBarMenu.leadingAnchor, constant: 40),
+                homeImage.widthAnchor.constraint(equalToConstant: 30),
+                homeImage.heightAnchor.constraint(equalToConstant: 30),
+                
+                tvImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
+                tvImage.leadingAnchor.constraint(equalTo: homeImage.trailingAnchor, constant: 30),
+                tvImage.widthAnchor.constraint(equalToConstant: 30),
+                tvImage.heightAnchor.constraint(equalToConstant: 30),
+                
+                searchImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
+                searchImage.leadingAnchor.constraint(equalTo: tvImage.trailingAnchor, constant: 30),
+                searchImage.widthAnchor.constraint(equalToConstant: 30),
+                searchImage.heightAnchor.constraint(equalToConstant: 30),
+                
+                downloadImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
+                downloadImage.leadingAnchor.constraint(equalTo: searchImage.trailingAnchor, constant: 30),
+                downloadImage.widthAnchor.constraint(equalToConstant: 30),
+                downloadImage.heightAnchor.constraint(equalToConstant: 30),
+                
+                perfilImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
+                perfilImage.leadingAnchor.constraint(equalTo: downloadImage.trailingAnchor, constant: 30),
+                perfilImage.widthAnchor.constraint(equalToConstant: 30),
+                perfilImage.heightAnchor.constraint(equalToConstant: 30),
+            ])
         }
         NSLayoutConstraint.activate([
             collectionVW.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -270,41 +344,6 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
             chromecastImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
             chromecastImage.widthAnchor.constraint(equalToConstant: 30),
             chromecastImage.heightAnchor.constraint(equalToConstant: 30),
-            
-            tabBarMenu.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            tabBarMenu.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
-            tabBarMenu.widthAnchor.constraint(equalToConstant: 600),
-            tabBarMenu.heightAnchor.constraint(equalToConstant: 80),
-            
-            blurEffectTabBar.leadingAnchor.constraint(equalTo: tabBarMenu.leadingAnchor),
-            blurEffectTabBar.trailingAnchor.constraint(equalTo: tabBarMenu.trailingAnchor),
-            blurEffectTabBar.bottomAnchor.constraint(equalTo: tabBarMenu.bottomAnchor),
-            blurEffectTabBar.topAnchor.constraint(equalTo: tabBarMenu.topAnchor),
-            
-            homeImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
-            homeImage.leadingAnchor.constraint(equalTo: tabBarMenu.leadingAnchor, constant: 66),
-            homeImage.widthAnchor.constraint(equalToConstant: 40),
-            homeImage.heightAnchor.constraint(equalToConstant: 40),
-            
-            tvImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
-            tvImage.leadingAnchor.constraint(equalTo: homeImage.trailingAnchor, constant: 66),
-            tvImage.widthAnchor.constraint(equalToConstant: 40),
-            tvImage.heightAnchor.constraint(equalToConstant: 40),
-            
-            searchImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
-            searchImage.leadingAnchor.constraint(equalTo: tvImage.trailingAnchor, constant: 66),
-            searchImage.widthAnchor.constraint(equalToConstant: 40),
-            searchImage.heightAnchor.constraint(equalToConstant: 40),
-            
-            downloadImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
-            downloadImage.leadingAnchor.constraint(equalTo: searchImage.trailingAnchor, constant: 66),
-            downloadImage.widthAnchor.constraint(equalToConstant: 40),
-            downloadImage.heightAnchor.constraint(equalToConstant: 40),
-            
-            perfilImage.centerYAnchor.constraint(equalTo: tabBarMenu.centerYAnchor),
-            perfilImage.leadingAnchor.constraint(equalTo: downloadImage.trailingAnchor, constant: 66),
-            perfilImage.widthAnchor.constraint(equalToConstant: 40),
-            perfilImage.heightAnchor.constraint(equalToConstant: 40),
             
         ])
         
@@ -360,7 +399,6 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
         topNavigationBarCollectionView.isHidden = true
         
         topNavigationBar.isHidden = false
-        topNavigationBar.frame = topNavigationBarCollectionView.frame
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: any UIViewControllerTransitionCoordinator) {

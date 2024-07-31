@@ -101,8 +101,8 @@ class TopNavigationBarView: UIView {
     
     var control = true
     override func layoutSubviews() {
+        print("SUBSVIEWS SCROLlABLE")
         super.layoutSubviews()
-        print("SUBVIEWS")
         
         self.menuCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         
@@ -114,7 +114,6 @@ class TopNavigationBarView: UIView {
         
         
     }
-    
     
     
     private func selectDefaultHeaderMenuItem() {
