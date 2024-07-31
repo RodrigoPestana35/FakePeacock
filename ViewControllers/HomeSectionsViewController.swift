@@ -157,7 +157,13 @@ class HomeSectionsViewController: UIViewController, FilterCategoryDelegate{
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = .init(top: 8, leading: 3, bottom: 0, trailing: 3)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(300), heightDimension: .absolute(168))
+        let groupSize: NSCollectionLayoutSize
+        if UITraitCollection.current.horizontalSizeClass == .regular && UITraitCollection.current.verticalSizeClass == .regular {
+            groupSize = NSCollectionLayoutSize(widthDimension: .absolute(300), heightDimension: .absolute(168))
+        }
+        else {
+            groupSize = NSCollectionLayoutSize(widthDimension: .absolute(250), heightDimension: .absolute(140))
+        }
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
